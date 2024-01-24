@@ -3,18 +3,23 @@ import { Vector3 } from "three";
 import { Dog } from "./Dog";
 import { useProducts } from "../context/product.context";
 import { Product } from "../../types/products";
-import { PopUp } from "../model/popup";
+import PopUp from "../model/popup";
+
+interface IProps {
+  isUserClicked: boolean;
+  setIsUserClicked: (value: any) => void;
+}
 
 function randomProducts(products: Product[]) {
   return Math.ceil(Math.random() * products.length) - 1;
 }
 
-const FallingDogManager = () => {
+const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
   const [fallingDogs, setFallingDogs] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
 
   const [products, setProducts, service] = useProducts();
 
-  const [isUserClicked, setIsUserClicked] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const spawnFallingDog = () => {
@@ -46,7 +51,7 @@ const FallingDogManager = () => {
     return () => clearInterval(spawnInterval);
   }, []);
 
-  return isUserClicked ? <PopUp /> : <>{fallingDogs}</>;
+  return <>{fallingDogs}</>;
 };
 
 export default FallingDogManager;
