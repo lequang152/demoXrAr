@@ -14,7 +14,23 @@ interface IProps {
 }
 
 function randomProducts(products: Product[]) {
-  return Math.ceil(Math.random() * products.length) - 1;
+  if (products.length === 0) {
+    return undefined;
+  }
+  const totalProbability = products.reduce(
+    (sum, product) => sum + product.probability,
+    0
+  );
+  const randomValue = Math.random() * totalProbability;
+
+  let cumulativeProbability = 0;
+  for (const product of products) {
+    cumulativeProbability += product.probability;
+    if (randomValue <= cumulativeProbability) {
+      return product;
+    }
+  }
+  return undefined;
 }
 
 const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
@@ -30,7 +46,7 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
     const spawnFallingDog = () => {
       const randomX = Math.random() * 20 - 10;
       const randomZ = Math.random() * 20 - 10;
-      const productIndex = randomProducts(products);
+      const randomProduct = randomProducts(products);
       const position = new Vector3(randomX, 10, randomZ);
 
       const randomValue = Math.random();
@@ -42,7 +58,7 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
           <GiftOne
             key={Date.now()}
             onClick={setIsUserClicked}
-            product={products[productIndex]}
+            product={randomProduct}
             position={position}
           />
         );
@@ -52,7 +68,7 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
           <GiftThree
             key={Date.now()}
             onClick={setIsUserClicked}
-            product={products[productIndex]}
+            product={randomProduct}
             position={position}
           />
         );
@@ -62,7 +78,7 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
           <Dog
             key={Date.now()}
             onClick={setIsUserClicked}
-            product={products[productIndex]}
+            product={randomProduct}
             position={position}
           />
         );

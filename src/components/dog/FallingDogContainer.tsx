@@ -20,7 +20,11 @@ class ApiThienSuGiftService extends ApiGiftService {
     user?: User | undefined,
     ...args: any
   ): Promise<any> {
-    throw new Error("Method not implemented.");
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 1000);
+    });
   }
   public authenticate(
     credential?: UserLogin | undefined,

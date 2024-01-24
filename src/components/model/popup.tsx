@@ -10,6 +10,8 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@mui/material";
+import { useProducts } from "../context/product.context";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   setIsUserClicked: (value: any) => void;
@@ -18,7 +20,8 @@ interface IProps {
 
 function PopUp({ setIsUserClicked, product }: IProps) {
   const [isVisible, setIsVisible] = useState(false);
-
+  const [products, setProducts, service] = useProducts();
+  const navigator = useNavigate();
   useEffect(() => {
     // Add a delay to the appearance for demonstration purposes
     const timeoutId = setTimeout(() => {
@@ -130,7 +133,19 @@ function PopUp({ setIsUserClicked, product }: IProps) {
           variant="contained"
           size="small"
           color="success"
-          onClick={() => {}}
+          onClick={() => {
+            // chỗ này xử lý khi user click đổi quà
+            if (service) {
+              service
+                .userPickProduct(product.id)
+                .then(() => {
+                  navigator("/");
+                })
+                .catch((err) => {
+                  // handle error here
+                });
+            }
+          }}
         >
           Đổi quà
         </Button>
