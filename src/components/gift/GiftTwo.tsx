@@ -9,7 +9,6 @@ Title: A Gift Box
 */
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { Group, Vector3 as ThreeVector3 } from "three";
-import { Product } from "../../types/products";
 import { RefObject, useEffect, useRef, useState } from "react";
 import useSound from "use-sound";
 import { useFrame } from "@react-three/fiber";
@@ -31,37 +30,54 @@ export function GiftTwo({ position, product, onClick }: IProps) {
 
   const [playSound] = useSound("src/components/dog/sound.wav");
 
-  // const handlePointerDown = (event: any) => {
-  //   // Xử lý sự kiện khi chú chó được click
-  //   setExploding(true);
-  //   setGiftVisible(false);
-  //   playSound();
-  //   onClick(true);
-  //   if (group.current) {
-  //     setGiftPosition(group.current.position);
-  //   }
-  //   // Biến mất sau một khoảng thời gian (ví dụ: 1 giây)
-  //   setTimeout(() => {
-  //     setExploding(false);
-  //   }, 1000);
-  // };
+  const calculateFallSpeed = (probability: number | undefined): number => {
+    // Kiểm tra xem probability có tồn tại không
+    if (probability !== undefined) {
+      // Áp dụng tốc độ rơi dựa trên khoảng giá trị của probability
+      if (probability >= 0.1 && probability <= 0.4) {
+        return 0.13;
+      } else if (probability > 0.4 && probability <= 0.7) {
+        return 0.2;
+      } else if (probability > 0.7 && probability <= 1) {
+        return 0.3;
+      }
+    }
 
-  // useEffect(() => {
-  //   // Kiểm tra xem actions.animation có tồn tại không
-  //   if (actions.animation) {
-  //     // Chạy animation khi mô hình được tạo
-  //     actions.animation.play();
-  //   }
-  // }, [actions.animation]);
+    // Nếu probability không tồn tại hoặc không nằm trong bất kỳ khoảng nào, sử dụng một giá trị mặc định
+    return 0.1;
+  };
 
-  // useFrame(() => {
-  //   // Cập nhật vị trí mô hình trong mỗi frame
-  //   if (group.current) {
-  //     group.current.position.y -= 0.05; // Điều chỉnh tốc độ rơi
-  //     group.current.scale.set(0.5, 0.5, 0.5);
-  //     group.current.rotation.y += 0.1;
-  //   }
-  // });
+  const handlePointerDown = (event: any) => {
+    // Xử lý sự kiện khi chú chó được click
+    setExploding(true);
+    setGiftVisible(false);
+    playSound();
+    onClick(true);
+    if (group.current) {
+      setGiftPosition(group.current.position);
+    }
+    // Biến mất sau một khoảng thời gian (ví dụ: 1 giây)
+    setTimeout(() => {
+      setExploding(false);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    // Kiểm tra xem actions.animation có tồn tại không
+    if (actions.animation) {
+      // Chạy animation khi mô hình được tạo
+      actions.animation.play();
+    }
+  }, [actions.animation]);
+
+  useFrame(() => {
+    // Cập nhật vị trí mô hình trong mỗi frame
+    if (group.current) {
+      group.current.position.y -= calculateFallSpeed(product?.probability); // Điều chỉnh tốc độ rơi
+      group.current.scale.set(0.5, 0.5, 0.5);
+      group.current.rotation.y += 0.1;
+    }
+  });
 
   return (
     <>
@@ -69,26 +85,15 @@ export function GiftTwo({ position, product, onClick }: IProps) {
         ref={group}
         position={position}
         dispose={null}
-        // onClick={handlePointerDown}
+        onClick={handlePointerDown}
         visible={giftVisible}
+        scale={1.6}
       >
         <mesh
-          geometry={nodes.Cube_Body_0.geometry}
-          material={materials.Body}
-          position={[0, 100, 0]}
+          geometry={nodes.Giftbox_GiftMat_0.geometry}
+          material={materials.GiftMat}
+          position={[0, -1, 0]}
           rotation={[-Math.PI / 2, 0, 0]}
-          scale={1.127}
-        />
-        <mesh
-          geometry={nodes.Cube002_Material_0.geometry}
-          material={materials.Material}
-          position={[0, 100, -99.172]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={[0.897, 1.19, 1.382]}
-        />
-        <instancedMesh
-          args={[nodes.Cube006_Material_0.geometry, materials.Material, 8]}
-          instanceMatrix={nodes.Cube006_Material_0.instanceMatrix}
         />
       </group>
       {exploding && <ExplosionEffect position={giftPosition} />}

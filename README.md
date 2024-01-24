@@ -34,3 +34,5 @@ export default {
   This work is based on "Gift" (https://sketchfab.com/3d-models/gift-729c11632ae14db6975e4d58e8749b54) by Mug (https://sketchfab.com/1Mug) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 
   This work is based on "A Gift Box" (https://sketchfab.com/3d-models/a-gift-box-1a53662e300b4d7e9ae39eba101409ea) by Rofnay (https://sketchfab.com/Rofnay) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+
+  This work is based on "FNAF Gift Box" (https://sketchfab.com/3d-models/fnaf-gift-box-bbdd05357a174e57a7ffb95910cc3748) by EmilJoes Games (https://sketchfab.com/emiljoes) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
