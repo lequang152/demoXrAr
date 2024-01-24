@@ -50,5 +50,5 @@ export function ProductProvider({
 export const useProducts = () => {
   const { products, setProducts } = useContext(productContext);
 
-  return [products, setProducts];
+  return [products, setProducts] as [Product[], (products: Product[]) => void];
 };

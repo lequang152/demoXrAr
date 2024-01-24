@@ -5,12 +5,14 @@ import { AnimationAction, Group } from "three";
 import { Vector3 as ThreeVector3 } from "three";
 import useSound from "use-sound";
 import ExplosionEffect from "../effect/ExplosionEffect";
+import { Product } from "../../types/products";
 
 export interface IProps {
   position: ThreeVector3;
+  product?: Product;
 }
 
-export function Dog({ position }: IProps) {
+export function Dog({ position, product }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;
 
   const [exploding, setExploding] = useState(false);
@@ -23,6 +25,7 @@ export function Dog({ position }: IProps) {
 
   const handlePointerDown = (event: any) => {
     // Xử lý sự kiện khi chú chó được click
+    console.log(`Product ${product?.id} was clicked`);
     setExploding(true);
     setDogVisible(false);
     playSound();
@@ -34,10 +37,6 @@ export function Dog({ position }: IProps) {
       setExploding(false);
     }, 1000);
   };
-
-  useEffect(() => {
-    console.log(nodes);
-  }, []);
 
   useEffect(() => {
     // Kiểm tra xem actions.animation có tồn tại không

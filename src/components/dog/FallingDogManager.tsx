@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { Vector3 } from "three";
 import { Dog } from "./Dog";
 import { useProducts } from "../context/product.context";
+import { Product } from "../../types/products";
+
+function randomProducts(products: Product[]) {
+  return Math.ceil(Math.random() * products.length) - 1;
+}
 
 const FallingDogManager = () => {
   const [fallingDogs, setFallingDogs] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
@@ -9,12 +14,20 @@ const FallingDogManager = () => {
   const [products, setProducts] = useProducts();
 
   useEffect(() => {
-    console.log(products);
     const spawnFallingDog = () => {
-      const randomX = Math.random() * 20 - 10; // Vị trí x ngẫu nhiên trong khoảng từ -10 đến 10
-      const randomZ = Math.random() * 20 - 10; // Vị trí z ngẫu nhiên trong khoảng từ -10 đến 10
-      const position = new Vector3(randomX, 10, randomZ); // Vị trí ban đầu ở độ cao 10
-      const fallingDog = <Dog key={Date.now()} position={position} />;
+      const randomX = Math.random() * 20 - 10;
+      const randomZ = Math.random() * 20 - 10;
+
+      const productIndex = randomProducts(products);
+
+      const position = new Vector3(randomX, 10, randomZ);
+      const fallingDog = (
+        <Dog
+          key={Date.now()}
+          product={products[productIndex]}
+          position={position}
+        />
+      );
 
       setFallingDogs((prevDogs) => [...prevDogs, fallingDog]);
 
