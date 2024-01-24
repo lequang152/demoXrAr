@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Vector3 } from "three";
 import { Dog } from "./Dog";
 import { useProducts } from "../context/product.context";
 import { Product } from "../../types/products";
-import PopUp from "../model/popup";
 
 interface IProps {
   isUserClicked: boolean;
@@ -20,6 +19,8 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
   const [products, setProducts, service] = useProducts();
 
   // const [showModal, setShowModal] = useState(false);
+  //giới hạn lượt chơi
+  const count = useRef(1);
 
   useEffect(() => {
     const spawnFallingDog = () => {
@@ -51,7 +52,13 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
     return () => clearInterval(spawnInterval);
   }, []);
 
-  return <>{fallingDogs}</>;
+  useEffect(() => {
+    if (isUserClicked) {
+      count.current--;
+    }
+  }, [isUserClicked]);
+
+  return count.current > 0 ? <>{fallingDogs}</> : <></>;
 };
 
 export default FallingDogManager;

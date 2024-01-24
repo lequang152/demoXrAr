@@ -7,9 +7,6 @@ import { ApiGiftService } from "../service/api";
 import { MOCK_PRODUCTS, Product } from "../../types/products";
 import { ProductProvider } from "../context/product.context";
 import { User, UserLogin } from "../../types/user";
-import Modal from "react-bootstrap/Modal";
-import * as React from "react";
-import Button from "@mui/material/Button";
 import PopUp from "../model/popup";
 
 class ApiThienSuGiftService extends ApiGiftService {

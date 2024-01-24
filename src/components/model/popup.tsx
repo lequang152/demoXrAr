@@ -10,7 +10,6 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@mui/material";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 interface IProps {
   setIsUserClicked: (value: any) => void;

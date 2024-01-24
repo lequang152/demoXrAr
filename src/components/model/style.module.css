@@ -12,7 +12,7 @@
   padding: 26px;
   text-align: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .box.show {
