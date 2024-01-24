@@ -3,7 +3,9 @@ import { Vector3, useFrame } from "@react-three/fiber";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { AnimationAction, Group } from "three";
 import { Vector3 as ThreeVector3 } from "three";
+import useSound from "use-sound";
 import ExplosionEffect from "../effect/ExplosionEffect";
+
 export interface IProps {
   position: ThreeVector3;
 }
@@ -17,11 +19,13 @@ export function Dog({ position }: IProps) {
 
   const { nodes, animations } = useGLTF("src/model/dog.gltf") as any;
   const { actions } = useAnimations(animations, group);
+  const [playSound] = useSound("src/components/dog/sound.wav");
 
   const handlePointerDown = (event: any) => {
     // Xử lý sự kiện khi chú chó được click
     setExploding(true);
     setDogVisible(false);
+    playSound();
     if (group.current) {
       setDogPosition(group.current.position);
     }

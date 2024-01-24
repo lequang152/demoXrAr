@@ -9,10 +9,7 @@ const FallingDogContainer = () => {
   return (
     <>
       <Canvas>
-        <Environment
-          files="/src/components/xr-hit-model/view3.hdr"
-          background
-        />
+        <Environment files="/src/components/dog/view.hdr" background />
         <XR>
           <FallingDogManager />
         </XR>
