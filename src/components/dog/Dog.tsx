@@ -59,7 +59,6 @@ export function Dog({ position, product, onClick }: IProps) {
 
   return (
     <>
-      <OrbitControls />
       <group
         ref={group}
         position={position}

@@ -3,6 +3,10 @@ import { Vector3 } from "three";
 import { Dog } from "./Dog";
 import { useProducts } from "../context/product.context";
 import { Product } from "../../types/products";
+import { OrbitControls } from "@react-three/drei";
+import { GiftOne } from "../gift/GiftOne";
+import { GiftTwo } from "../gift/GiftTwo";
+import { GiftThree } from "../gift/GiftThree";
 
 interface IProps {
   isUserClicked: boolean;
@@ -28,14 +32,41 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
       const randomZ = Math.random() * 20 - 10;
       const productIndex = randomProducts(products);
       const position = new Vector3(randomX, 10, randomZ);
-      const fallingDog = (
-        <Dog
-          key={Date.now()}
-          onClick={setIsUserClicked}
-          product={products[productIndex]}
-          position={position}
-        />
-      );
+
+      const randomValue = Math.random();
+      let fallingDog: any;
+
+      if (randomValue < 0.4) {
+        // 40% chance for GiftOne
+        fallingDog = (
+          <GiftOne
+            key={Date.now()}
+            onClick={setIsUserClicked}
+            product={products[productIndex]}
+            position={position}
+          />
+        );
+      } else if (randomValue < 0.7) {
+        // 30% chance for GiftTwo
+        fallingDog = (
+          <GiftThree
+            key={Date.now()}
+            onClick={setIsUserClicked}
+            product={products[productIndex]}
+            position={position}
+          />
+        );
+      } else {
+        // 30% chance for Dog
+        fallingDog = (
+          <Dog
+            key={Date.now()}
+            onClick={setIsUserClicked}
+            product={products[productIndex]}
+            position={position}
+          />
+        );
+      }
       setFallingDogs((prevDogs) => [...prevDogs, fallingDog]);
 
       setTimeout(() => {
@@ -58,7 +89,14 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
     }
   }, [isUserClicked]);
 
-  return count.current > 0 ? <>{fallingDogs}</> : <></>;
+  return count.current > 0 ? (
+    <>
+      <OrbitControls enableZoom={false} />
+      {fallingDogs}
+    </>
+  ) : (
+    <></>
+  );
 };
 
 export default FallingDogManager;
