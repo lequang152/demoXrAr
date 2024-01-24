@@ -6,12 +6,7 @@ import { Vector3 as ThreeVector3 } from "three";
 import useSound from "use-sound";
 import ExplosionEffect from "../effect/ExplosionEffect";
 import { Product } from "../../types/products";
-
-export interface IProps {
-  position: ThreeVector3;
-  product?: Product;
-  onClick: (bool: boolean) => void;
-}
+import { IProps } from "../../types/gift.props";
 
 export function Dog({ position, product, onClick }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;

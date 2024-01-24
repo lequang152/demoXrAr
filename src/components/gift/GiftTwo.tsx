@@ -14,12 +14,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import useSound from "use-sound";
 import { useFrame } from "@react-three/fiber";
 import ExplosionEffect from "../effect/ExplosionEffect";
-
-interface IProps {
-  position: ThreeVector3;
-  product?: Product;
-  onClick: (bool: boolean) => void;
-}
+import { IProps } from "../../types/gift.props";
 
 export function GiftTwo({ position, product, onClick }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;

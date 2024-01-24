@@ -7,6 +7,7 @@ import { OrbitControls } from "@react-three/drei";
 import { GiftOne } from "../gift/GiftOne";
 import { GiftTwo } from "../gift/GiftTwo";
 import { GiftThree } from "../gift/GiftThree";
+import { giftFactory } from "../gift/gift.factory";
 
 interface IProps {
   isUserClicked: boolean;
@@ -50,39 +51,11 @@ const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
       const position = new Vector3(randomX, 10, randomZ);
 
       const randomValue = Math.random();
-      let fallingDog: any;
-
-      if (randomValue < 0.4) {
-        // 40% chance for GiftOne
-        fallingDog = (
-          <GiftOne
-            key={Date.now()}
-            onClick={setIsUserClicked}
-            product={randomProduct}
-            position={position}
-          />
-        );
-      } else if (randomValue < 0.7) {
-        // 30% chance for GiftTwo
-        fallingDog = (
-          <GiftThree
-            key={Date.now()}
-            onClick={setIsUserClicked}
-            product={randomProduct}
-            position={position}
-          />
-        );
-      } else {
-        // 30% chance for Dog
-        fallingDog = (
-          <Dog
-            key={Date.now()}
-            onClick={setIsUserClicked}
-            product={randomProduct}
-            position={position}
-          />
-        );
-      }
+      let fallingDog = giftFactory({
+        product: randomProduct,
+        onClick: setIsUserClicked,
+        position: position,
+      });
       setFallingDogs((prevDogs) => [...prevDogs, fallingDog]);
 
       setTimeout(() => {
