@@ -8,9 +8,10 @@ import useSound from "use-sound";
 
 export interface IProps {
   position: ThreeVector3;
+  setModalShow: (value: any) => void;
 }
 
-export function Dog({ position }: IProps) {
+export function Dog({ position, setModalShow }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;
 
   const [exploding, setExploding] = useState(false);
@@ -26,6 +27,10 @@ export function Dog({ position }: IProps) {
     setExploding(true);
     setDogVisible(false);
     playSound();
+    setTimeout(() => {
+      setModalShow(true);
+    }, 1000);
+
     if (group.current) {
       setDogPosition(group.current.position);
     }
