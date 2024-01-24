@@ -2,9 +2,9 @@ import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import { Vector3, useFrame } from "@react-three/fiber";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { AnimationAction, Group } from "three";
-import ExplosionEffect from "./ExplosionEffect";
 import { Vector3 as ThreeVector3 } from "three";
 import useSound from "use-sound";
+import ExplosionEffect from "../effect/ExplosionEffect";
 
 export interface IProps {
   position: ThreeVector3;
@@ -39,6 +39,10 @@ export function Dog({ position, setModalShow }: IProps) {
       setExploding(false);
     }, 1000);
   };
+
+  useEffect(() => {
+    console.log(nodes);
+  }, []);
 
   useEffect(() => {
     // Kiểm tra xem actions.animation có tồn tại không
