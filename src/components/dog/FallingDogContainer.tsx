@@ -43,7 +43,7 @@ const FallingDogContainer = () => {
           <Environment files="/src/components/dog/view.hdr" background />
           <XR>
             <FallingDogManager setModalShow={setModalShow} />
-          <Modal
+            {/* <Modal
             show={modalShow}
             onHide={() => setModalShow(false)}
             size="lg"
@@ -70,7 +70,7 @@ const FallingDogContainer = () => {
                 onClick={() => setModalShow(false)}
               ></Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
           </XR>
         </Canvas>
       </ProductProvider>
