@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { Vector3 } from "three";
 import { Dog } from "./Dog";
+import { useProducts } from "../context/product.context";
 
 const FallingDogManager = () => {
   const [fallingDogs, setFallingDogs] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
 
+  const [products, setProducts] = useProducts();
+
   useEffect(() => {
+    console.log(products);
     const spawnFallingDog = () => {
       const randomX = Math.random() * 20 - 10; // Vị trí x ngẫu nhiên trong khoảng từ -10 đến 10
       const randomZ = Math.random() * 20 - 10; // Vị trí z ngẫu nhiên trong khoảng từ -10 đến 10
