@@ -20,9 +20,7 @@ const useExplosion = () => {
         y: (Math.random() - 0.5) * 2,
         z: (Math.random() - 0.5) * 2,
         scale: Math.random(),
-        color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
-          Math.random() * 255
-        })`,
+        color: getRandomColor(),
         opacity: 1,
         speed: Math.random() * 0.02,
       };
@@ -41,6 +39,13 @@ const useExplosion = () => {
         };
       });
     });
+  };
+
+  const getRandomColor = () => {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+    return `rgb(${r}, ${g}, ${b})`;
   };
 
   return {

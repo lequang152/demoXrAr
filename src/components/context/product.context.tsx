@@ -11,9 +11,11 @@ import { ApiGiftService } from "../service/api";
 const productContext = createContext({
   products: [],
   setProducts: () => {},
+  service: undefined,
 } as {
   products: Product[];
   setProducts: (products: Product[]) => void;
+  service: ApiGiftService | undefined;
 });
 
 export function ProductProvider({
@@ -41,14 +43,18 @@ export function ProductProvider({
   return isError ? (
     <h1>Error</h1>
   ) : (
-    <productContext.Provider value={{ products, setProducts }}>
+    <productContext.Provider value={{ products, setProducts, service }}>
       {children}
     </productContext.Provider>
   );
 }
 
 export const useProducts = () => {
-  const { products, setProducts } = useContext(productContext);
+  const { products, setProducts, service } = useContext(productContext);
 
-  return [products, setProducts] as [Product[], (products: Product[]) => void];
+  return [products, setProducts, service] as [
+    Product[],
+    (products: Product[]) => void,
+    ApiGiftService
+  ];
 };

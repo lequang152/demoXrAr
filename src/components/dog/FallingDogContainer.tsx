@@ -1,12 +1,15 @@
 import { Canvas } from "@react-three/fiber";
 import { XR } from "@react-three/xr";
-import { Environment } from "@react-three/drei";
+import { Environment, View } from "@react-three/drei";
 import FallingDogManager from "./FallingDogManager";
 import { useEffect, useState } from "react";
 import { ApiGiftService } from "../service/api";
 import { MOCK_PRODUCTS, Product } from "../../types/products";
 import { ProductProvider } from "../context/product.context";
 import { User, UserLogin } from "../../types/user";
+import Modal from "react-bootstrap/Modal";
+import * as React from "react";
+import Button from "@mui/material/Button";
 
 class ApiThienSuGiftService extends ApiGiftService {
   public getPromoteProducts(...args: any): Promise<Product[]> {

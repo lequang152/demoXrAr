@@ -10,9 +10,10 @@ import { Product } from "../../types/products";
 export interface IProps {
   position: ThreeVector3;
   product?: Product;
+  onClick: (bool: boolean) => void;
 }
 
-export function Dog({ position, product }: IProps) {
+export function Dog({ position, product, onClick }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;
 
   const [exploding, setExploding] = useState(false);
@@ -29,6 +30,7 @@ export function Dog({ position, product }: IProps) {
     setExploding(true);
     setDogVisible(false);
     playSound();
+    onClick(true);
     if (group.current) {
       setDogPosition(group.current.position);
     }
