@@ -4,6 +4,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   min-height: 200px;
+  max-height: calc(100vh - 60px);
+  max-width: calc(100vw - 40px);
   min-width: 300px;
   background: #eefffd;
   z-index: 99;
@@ -36,6 +38,34 @@
   border: none;
   background: transparent;
   outline: none;
+}
+
+.description {
+  text-align: justify;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Số dòng muốn hiển thị */
+  -webkit-box-orient: vertical;
+  hyphens: auto;
+}
+
+.readMore {
+  margin-bottom: 10px;
+  text-align: left;
+  color: blue;
+  cursor: pointer;
+}
+
+.readMore a {
+  text-decoration: none;
+}
+
+.readMore a:visited {
+  color: blue;
+}
+
+.readMore a:hover {
+  text-decoration: underline;
 }
 
 /* @keyframes rotate {

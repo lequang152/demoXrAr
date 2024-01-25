@@ -31,6 +31,23 @@ export function GiftThree({ position, product, onClick }: IProps) {
 
   const [playSound] = useSound("src/components/dog/sound.wav");
 
+  const calculateFallSpeed = (probability: number | undefined): number => {
+    // Kiểm tra xem probability có tồn tại không
+    if (probability !== undefined) {
+      // Áp dụng tốc độ rơi dựa trên khoảng giá trị của probability
+      if (probability >= 0.1 && probability <= 0.4) {
+        return 0.13;
+      } else if (probability > 0.4 && probability <= 0.7) {
+        return 0.2;
+      } else if (probability > 0.7 && probability <= 1) {
+        return 0.3;
+      }
+    }
+
+    // Nếu probability không tồn tại hoặc không nằm trong bất kỳ khoảng nào, sử dụng một giá trị mặc định
+    return 0.1;
+  };
+
   const handlePointerDown = (event: any) => {
     // Xử lý sự kiện khi chú chó được click
     setExploding(true);
@@ -57,7 +74,7 @@ export function GiftThree({ position, product, onClick }: IProps) {
   useFrame(() => {
     // Cập nhật vị trí mô hình trong mỗi frame
     if (group.current) {
-      group.current.position.y -= 0.07; // Điều chỉnh tốc độ rơi
+      group.current.position.y -= calculateFallSpeed(product?.probability); // Điều chỉnh tốc độ rơi
       group.current.scale.set(0.5, 0.5, 0.5);
       group.current.rotation.y += 0.1;
     }
@@ -70,6 +87,7 @@ export function GiftThree({ position, product, onClick }: IProps) {
         dispose={null}
         onClick={handlePointerDown}
         visible={giftVisible}
+        scale={1.3}
       >
         <mesh
           geometry={nodes.defaultMaterial.geometry}
