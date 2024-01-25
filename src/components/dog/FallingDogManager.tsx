@@ -17,16 +17,18 @@ function randomProducts(products: Product[]) {
     return undefined;
   }
 
-  products.push(MOCK_UNDEFINED_PRODUCT);
+  const productsCopy = Array.from(products);
 
-  const totalProbability = products.reduce(
+  productsCopy.push(MOCK_UNDEFINED_PRODUCT);
+
+  const totalProbability = productsCopy.reduce(
     (sum, product) => sum + product.probability,
     0
   );
   const randomValue = Math.random() * totalProbability;
 
   let cumulativeProbability = 0;
-  for (const product of products) {
+  for (const product of productsCopy) {
     cumulativeProbability += product.probability;
     if (randomValue <= cumulativeProbability) {
       if (product.id == undefined) {
