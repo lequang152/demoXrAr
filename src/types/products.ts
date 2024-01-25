@@ -1,11 +1,21 @@
 export type Product = {
-  id: string | number;
+  id: string | number | undefined;
   name: string;
   price: number;
   saleLink: string;
   image: string;
   probability: number; // xác suất xuất hiện, càng cao thì càng dễ ra
   description: string;
+};
+
+export const MOCK_UNDEFINED_PRODUCT = {
+  id: undefined,
+  probability: Number(process.env.REACT_APP_MISSING_CHANCE) || 0.6,
+  description: "",
+  image: "",
+  name: "",
+  price: 0,
+  saleLink: "",
 };
 
 export const MOCK_PRODUCTS: Product[] = [

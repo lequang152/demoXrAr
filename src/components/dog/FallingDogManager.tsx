@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Vector3 } from "three";
-import { Dog } from "./Dog";
 import { useProducts } from "../context/product.context";
-import { Product } from "../../types/products";
+import { MOCK_UNDEFINED_PRODUCT, Product } from "../../types/products";
 import { OrbitControls } from "@react-three/drei";
-import { GiftOne } from "../gift/GiftOne";
-import { GiftTwo } from "../gift/GiftTwo";
-import { GiftThree } from "../gift/GiftThree";
+
 import { giftFactory } from "../gift/gift.factory";
 
 interface IProps {
@@ -18,6 +15,11 @@ function randomProducts(products: Product[]) {
   if (products.length === 0) {
     return undefined;
   }
+
+  products.push(MOCK_UNDEFINED_PRODUCT);
+
+  console.log(MOCK_UNDEFINED_PRODUCT);
+
   const totalProbability = products.reduce(
     (sum, product) => sum + product.probability,
     0
@@ -28,6 +30,9 @@ function randomProducts(products: Product[]) {
   for (const product of products) {
     cumulativeProbability += product.probability;
     if (randomValue <= cumulativeProbability) {
+      if (product.id == undefined) {
+        return undefined;
+      }
       return product;
     }
   }
@@ -37,7 +42,7 @@ function randomProducts(products: Product[]) {
 const FallingDogManager = ({ isUserClicked, setIsUserClicked }: IProps) => {
   const [fallingDogs, setFallingDogs] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
 
-  const [products, setProducts, service] = useProducts();
+  const [products, ,] = useProducts();
 
   // const [showModal, setShowModal] = useState(false);
   //giới hạn lượt chơi
