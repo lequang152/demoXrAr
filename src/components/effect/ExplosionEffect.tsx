@@ -13,7 +13,7 @@ const ExplosionEffect = ({ position }: IProps) => {
   const { particles, updateParticles } = useExplosion();
 
   useEffect(() => {
-    // Thiết lập vị trí hiệu ứng nổ tại vị trí của con chó
+    // Thiết lập vị trí hiệu ứng nổ tại vị trí của phần quà
     if (group.current) {
       const threePosition = new ThreeVector3(
         position.x,
@@ -29,7 +29,7 @@ const ExplosionEffect = ({ position }: IProps) => {
   });
 
   return (
-    <group ref={group} position={position}>
+    <group ref={group} position={position} scale={[5, 5, 5]}>
       {particles.map((particle, index) => (
         <mesh
           key={index}

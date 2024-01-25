@@ -51,16 +51,16 @@ const FallingManager = ({
 
   // const [showModal, setShowModal] = useState(false);
   //giới hạn lượt chơi
-  const count = useRef(1);
+  const count = useRef(99);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined = undefined;
     if (isUserClicked) {
       count.current--;
     }
 
     const spawnFallingDog = () => {
-      const numberOfGifts = 50; // Số lượng hộp quà muốn xuất hiện cùng một lúc
+      const numberOfGifts = 30; // Số lượng hộp quà muốn xuất hiện cùng một lúc
 
       for (let i = 0; i < numberOfGifts; i++) {
         const randomX = Math.random() * 80 - 40;
