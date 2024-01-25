@@ -5,6 +5,7 @@ import { Group } from "three";
 import useSound from "use-sound";
 import ExplosionEffect from "../effect/ExplosionEffect";
 import { IProps } from "../../types/gift.props";
+const dog = import.meta.env.BASE_URL + "assets/model/dog.gltf";
 
 export function Dog({ position, product, onClick }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;
@@ -13,9 +14,9 @@ export function Dog({ position, product, onClick }: IProps) {
   const [dogPosition, setDogPosition] = useState(position);
   const [dogVisible, setDogVisible] = useState(true);
 
-  const { nodes, animations } = useGLTF("public/assets/model/dog.gltf") as any;
+  const { nodes, animations } = useGLTF(dog) as any;
   const { actions } = useAnimations(animations, group);
-  const [playSound] = useSound("public/assets/audio/sound.wav");
+  const [playSound] = useSound("/assets/audio/sound.wav");
 
   const handlePointerDown = (_event: any) => {
     // Xử lý sự kiện khi chú chó được click
@@ -109,7 +110,7 @@ export function Dog({ position, product, onClick }: IProps) {
 }
 
 const ModelPreload = () => {
-  useGLTF.preload("public/assets/model/dog.gltf");
+  useGLTF.preload(dog);
   return null;
 };
 

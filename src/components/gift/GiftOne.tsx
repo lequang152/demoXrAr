@@ -15,13 +15,12 @@ import useSound from "use-sound";
 import { useFrame } from "@react-three/fiber";
 import ExplosionEffect from "../effect/ExplosionEffect";
 import { IProps } from "../../types/gift.props";
+const modelGiftOne = import.meta.env.BASE_URL + "assets/model/gift-one.glb";
 
 export function GiftOne({ position, product, onClick }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;
 
-  const { nodes, materials, animations } = useGLTF(
-    "public/assets/model/gift-one.glb"
-  ) as any;
+  const { nodes, materials, animations } = useGLTF(modelGiftOne) as any;
 
   const { actions } = useAnimations(animations, group);
 
@@ -29,7 +28,7 @@ export function GiftOne({ position, product, onClick }: IProps) {
   const [giftPosition, setGiftPosition] = useState(position);
   const [giftVisible, setGiftVisible] = useState(true);
 
-  const [playSound] = useSound("public/assets/audio/sound.wav");
+  const [playSound] = useSound("/assets/audio/sound.wav");
 
   const calculateFallSpeed = (probability: number | undefined): number => {
     // Kiểm tra xem probability có tồn tại không
@@ -139,4 +138,4 @@ export function GiftOne({ position, product, onClick }: IProps) {
   );
 }
 
-useGLTF.preload("public/assets/model/gift-one.glb");
+useGLTF.preload(modelGiftOne);
