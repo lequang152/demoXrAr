@@ -12,13 +12,14 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { Group } from "three";
 import { RefObject, useEffect, useRef, useState } from "react";
 import useSound from "use-sound";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import ExplosionEffect from "../effect/ExplosionEffect";
 import { IProps } from "../../types/gift.props";
 const modelGiftOne = import.meta.env.BASE_URL + "assets/model/gift-one.glb";
 
 export function GiftOne({ position, product, onClick }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;
+  const camera = useThree().camera;
 
   const { nodes, materials, animations } = useGLTF(modelGiftOne) as any;
 
@@ -35,16 +36,16 @@ export function GiftOne({ position, product, onClick }: IProps) {
     if (probability !== undefined) {
       // Áp dụng tốc độ rơi dựa trên khoảng giá trị của probability
       if (probability >= 0.1 && probability <= 0.4) {
-        return 0.13;
-      } else if (probability > 0.4 && probability <= 0.7) {
-        return 0.2;
-      } else if (probability > 0.7 && probability <= 1) {
         return 0.3;
+      } else if (probability > 0.4 && probability <= 0.7) {
+        return 0.4;
+      } else if (probability > 0.7 && probability <= 1) {
+        return 0.5;
       }
     }
 
     // Nếu probability không tồn tại hoặc không nằm trong bất kỳ khoảng nào, sử dụng một giá trị mặc định
-    return 0.1;
+    return 0.25;
   };
 
   const handlePointerDown = (_event: any) => {
@@ -73,11 +74,36 @@ export function GiftOne({ position, product, onClick }: IProps) {
   useFrame(() => {
     // Cập nhật vị trí mô hình trong mỗi frame
     if (group.current) {
+      const distance = group.current.position.distanceTo(camera.position);
+      const newSize = 1 + 36 / distance;
+
       group.current.position.y -= calculateFallSpeed(product?.probability); // Điều chỉnh tốc độ rơi
-      group.current.scale.set(0.5, 0.5, 0.5);
+      group.current.scale.set(newSize, newSize, newSize);
       group.current.rotation.y += 0.1;
     }
   });
+
+  // useFrame(() => {
+  //   // Cập nhật vị trí mô hình trong mỗi frame
+  //   if (group.current) {
+  //     // Tính toán khoảng cách từ mô hình đến vị trí đang đứng của camera
+
+  //     // Tính toán kích thước mới dựa trên khoảng cách
+  //      // Điều chỉnh theo nhu cầu
+
+  //     // Thay đổi kích thước của mô hình
+  //     group.current.scale.set(newSize, newSize, newSize);
+
+  //     // Tính toán vị trí mới dựa trên khoảng cách
+  //     const newPosition = new Vector3().copy(position);
+  //     newPosition.y -= calculateFallSpeed(product?.probability); // Điều chỉnh tốc độ rơi
+
+  //     // Thay đổi vị trí của mô hình
+  //     group.current.position.copy(newPosition);
+
+  //     group.current.rotation.y += 0.1;
+  //   }
+  // });
 
   return (
     <>

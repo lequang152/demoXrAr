@@ -60,13 +60,12 @@ const FallingManager = ({
     }
 
     const spawnFallingDog = () => {
-      const numberOfDogs = 30; // Số lượng hộp quà muốn xuất hiện cùng một lúc
+      const numberOfGifts = 50; // Số lượng hộp quà muốn xuất hiện cùng một lúc
 
-      for (let i = 0; i < numberOfDogs; i++) {
+      for (let i = 0; i < numberOfGifts; i++) {
         const randomX = Math.random() * 80 - 40;
-
-        const randomZ = Math.random() * 80 - 40;
-        const randomY = Math.random() * 50;
+        const randomZ = Math.random() * 120 - 60;
+        const randomY = Math.random() * 100;
         const randomProduct = randomProducts(products);
 
         if (!isUserClicked) {
