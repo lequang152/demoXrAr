@@ -1,10 +1,4 @@
-import {
-  ReactElement,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Product } from "../../types/products";
 import { ApiGiftService } from "../service/api";
 

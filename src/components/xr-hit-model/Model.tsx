@@ -53,7 +53,7 @@ interface ModelProps {
 }
 
 export function Model({ position }: ModelProps) {
-  const { nodes, materials } = useGLTF("src/model/dog.gltf") as any;
+  const { nodes, materials } = useGLTF("public/assets/model/dog.gltf") as any;
 
   return (
     <group position={position} dispose={null} scale={0.5}>
@@ -105,7 +105,7 @@ export function Model({ position }: ModelProps) {
 
 // Preload the model
 const ModelPreload = () => {
-  useGLTF.preload("src/model/dog.gltf");
+  useGLTF.preload("public/assets/model/dog.gltf");
   return null;
 };
 

@@ -8,8 +8,7 @@ Source: https://sketchfab.com/3d-models/gift-box-9aadeeb6635440af88606903a06950d
 Title: Gift box
 */
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { Group, Vector3 as ThreeVector3 } from "three";
-import { Product } from "../../types/products";
+import { Group } from "three";
 import { RefObject, useEffect, useRef, useState } from "react";
 import useSound from "use-sound";
 import { useFrame } from "@react-three/fiber";
@@ -20,7 +19,7 @@ export function GiftThree({ position, product, onClick }: IProps) {
   const group = useRef<Group>(null) as RefObject<Group>;
 
   const { nodes, materials, animations } = useGLTF(
-    "src/model/gift-three.glb"
+    "public/assets/model/gift-three.glb"
   ) as any;
 
   const { actions } = useAnimations(animations, group);
@@ -29,7 +28,7 @@ export function GiftThree({ position, product, onClick }: IProps) {
   const [giftPosition, setGiftPosition] = useState(position);
   const [giftVisible, setGiftVisible] = useState(true);
 
-  const [playSound] = useSound("src/components/dog/sound.wav");
+  const [playSound] = useSound("public/assets/audio/sound.wav");
 
   const calculateFallSpeed = (probability: number | undefined): number => {
     // Kiểm tra xem probability có tồn tại không
@@ -48,7 +47,7 @@ export function GiftThree({ position, product, onClick }: IProps) {
     return 0.1;
   };
 
-  const handlePointerDown = (event: any) => {
+  const handlePointerDown = (_event: any) => {
     // Xử lý sự kiện khi chú chó được click
     setExploding(true);
     setGiftVisible(false);
@@ -107,4 +106,4 @@ export function GiftThree({ position, product, onClick }: IProps) {
   );
 }
 
-useGLTF.preload("src/model/gift-three.glb");
+useGLTF.preload("public/assets/model/gift-three.glb");

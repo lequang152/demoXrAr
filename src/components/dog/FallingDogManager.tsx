@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Vector3 } from "three";
 import { useProducts } from "../context/product.context";
 import { MOCK_UNDEFINED_PRODUCT, Product } from "../../types/products";
@@ -53,7 +53,7 @@ const FallingDogManager = ({
   //giới hạn lượt chơi
   const count = useRef(99);
 
-  useEffect(() => {
+  React.useLayoutEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined = undefined;
     if (isUserClicked) {
       count.current--;

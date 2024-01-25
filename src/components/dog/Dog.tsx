@@ -1,11 +1,9 @@
-import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
-import { Vector3, useFrame } from "@react-three/fiber";
+import { useAnimations, useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { RefObject, useEffect, useRef, useState } from "react";
-import { AnimationAction, Group } from "three";
-import { Vector3 as ThreeVector3 } from "three";
+import { Group } from "three";
 import useSound from "use-sound";
 import ExplosionEffect from "../effect/ExplosionEffect";
-import { Product } from "../../types/products";
 import { IProps } from "../../types/gift.props";
 
 export function Dog({ position, product, onClick }: IProps) {
@@ -15,11 +13,11 @@ export function Dog({ position, product, onClick }: IProps) {
   const [dogPosition, setDogPosition] = useState(position);
   const [dogVisible, setDogVisible] = useState(true);
 
-  const { nodes, animations } = useGLTF("src/model/dog.gltf") as any;
+  const { nodes, animations } = useGLTF("public/assets/model/dog.gltf") as any;
   const { actions } = useAnimations(animations, group);
-  const [playSound] = useSound("src/components/dog/sound.wav");
+  const [playSound] = useSound("public/assets/audio/sound.wav");
 
-  const handlePointerDown = (event: any) => {
+  const handlePointerDown = (_event: any) => {
     // Xử lý sự kiện khi chú chó được click
     console.log(`Product ${product?.id} was clicked`);
     setExploding(true);
@@ -111,7 +109,7 @@ export function Dog({ position, product, onClick }: IProps) {
 }
 
 const ModelPreload = () => {
-  useGLTF.preload("src/model/dog.gltf");
+  useGLTF.preload("public/assets/model/dog.gltf");
   return null;
 };
 

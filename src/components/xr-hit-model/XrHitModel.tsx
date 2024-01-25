@@ -22,7 +22,7 @@ function XrHitModel() {
     }
   });
 
-  useHitTest((hitMatrix: Matrix4, hit: XRHitTestResult) => {
+  useHitTest((hitMatrix: Matrix4) => {
     if (reticleRef.current) {
       hitMatrix.decompose(
         reticleRef.current.position,

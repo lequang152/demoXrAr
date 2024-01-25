@@ -6,7 +6,8 @@ import { Mesh } from "three";
 function Cube() {
   const cubeRef = useRef<Mesh>();
 
-  useFrame((state, delta) => {
+  // useFrame((state, delta) => {})
+  useFrame((_, delta) => {
     if (cubeRef.current) {
       cubeRef.current.rotation.y += delta; // Check if cubeRef.current is defined before accessing rotation
     }

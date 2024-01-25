@@ -20,17 +20,19 @@ interface IProps {
 }
 
 function PopUp({ setIsUserClicked, product }: IProps) {
-  let getProduct;
-  const randomValue = Math.random();
+  // let getProduct;
+  // const randomValue = Math.random();
 
-  if (randomValue <= 0.7) {
-    getProduct = undefined;
-  } else {
-    // Ở đây, bạn có thể set giá trị cho getProduct nếu muốn
-    getProduct = product; // Thay yourValue bằng giá trị mong muốn
-  }
+  // if (randomValue <= 0.7) {
+  //   getProduct = undefined;
+  // } else {
+  //   getProduct = product;
+  // }
+
   const [isVisible, setIsVisible] = useState(false);
-  const [products, setProducts, service] = useProducts();
+  // const [products, setProducts, service] = useProducts();
+
+  const [, , service] = useProducts();
 
   const [isExpanded, setIsExpanded] = useState(false);
   const descriptionRef = useRef<HTMLDivElement>(null);
@@ -59,7 +61,7 @@ function PopUp({ setIsUserClicked, product }: IProps) {
     // Add a delay to the appearance for demonstration purposes
     const timeoutId = setTimeout(() => {
       setIsVisible(true);
-    }, 500);
+    }, 700);
 
     // Clear the timeout when the component unmounts
     return () => clearTimeout(timeoutId);
@@ -113,7 +115,7 @@ function PopUp({ setIsUserClicked, product }: IProps) {
       <button className={styles.closeButton} onClick={handleClose}>
         &times;
       </button>
-      {getProduct ? (
+      {product ? (
         <div>
           <div style={{ position: "relative" }}>
             <FontAwesomeIcon
@@ -166,7 +168,7 @@ function PopUp({ setIsUserClicked, product }: IProps) {
                 }
               }}
             >
-              Đổi quà
+              Đổi Quà
             </Button>
           </div>
         </div>
@@ -178,11 +180,11 @@ function PopUp({ setIsUserClicked, product }: IProps) {
             style={{ color: "#74C0FC", fontSize: 100, marginBottom: 10 }}
           />{" "}
           <div className={styles.title}>CHÚC BẠN MAY MẮN LẦN SAU</div>
-          <div style={{ textAlign: "justify", fontWeight: 500 }}>
+          <div style={{ textAlign: "center", fontWeight: 500 }}>
             Cảm ơn bạn đã tham gia chương trình.
           </div>
           <div
-            style={{ textAlign: "justify", fontWeight: 500, marginBottom: 10 }}
+            style={{ textAlign: "center", fontWeight: 500, marginBottom: 10 }}
           >
             Chúc bạn may mắn hơn ở những sự kiện lần sau !
           </div>

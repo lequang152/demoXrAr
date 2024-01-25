@@ -3,7 +3,6 @@ import { useFrame } from "@react-three/fiber";
 import { Group } from "three";
 import { useExplosion } from "../hooks/useExplosion"; // Tạo một hook để quản lý hiệu ứng hạt
 import { Vector3 as ThreeVector3 } from "three";
-import { Vector3 as FiberVector3 } from "@react-three/fiber";
 
 interface IProps {
   position: ThreeVector3;
