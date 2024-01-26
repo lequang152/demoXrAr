@@ -12,7 +12,7 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { Group } from "three";
 import { RefObject, useEffect, useRef, useState } from "react";
 import useSound from "use-sound";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import ExplosionEffect from "../effect/ExplosionEffect";
 import { IProps } from "../../types/gift.props";
 import { calculateFallSpeed, useGift } from "./common";
@@ -28,6 +28,28 @@ export function GiftOne({ position, product, onClick }: IProps) {
     exploding,
     giftPosition,
   } = useGift({ position, product, onClick }, modelGiftOne);
+
+  // useFrame(() => {
+  //   // Cập nhật vị trí mô hình trong mỗi frame
+  //   if (group.current) {
+  //     // Tính toán khoảng cách từ mô hình đến vị trí đang đứng của camera
+
+  //     // Tính toán kích thước mới dựa trên khoảng cách
+  //      // Điều chỉnh theo nhu cầu
+
+  //     // Thay đổi kích thước của mô hình
+  //     group.current.scale.set(newSize, newSize, newSize);
+
+  //     // Tính toán vị trí mới dựa trên khoảng cách
+  //     const newPosition = new Vector3().copy(position);
+  //     newPosition.y -= calculateFallSpeed(product?.probability); // Điều chỉnh tốc độ rơi
+
+  //     // Thay đổi vị trí của mô hình
+  //     group.current.position.copy(newPosition);
+
+  //     group.current.rotation.y += 0.1;
+  //   }
+  // });
 
   return (
     <>

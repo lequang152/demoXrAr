@@ -53,11 +53,11 @@
   margin-bottom: 10px;
   text-align: left;
   color: blue;
-  cursor: pointer;
 }
 
 .readMore a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .readMore a:visited {

@@ -144,9 +144,7 @@ function PopUp({ setIsUserClicked, product }: IProps) {
               <a href={product.saleLink}>xem thêm</a>
             </div>
           )}
-          <div>
-            <Image src={product.image} rounded width={100} />
-          </div>
+          <Image src={product.image} rounded width={100} />
           <div style={{ marginTop: 10 }}>
             <Button
               href="/"

@@ -12,7 +12,8 @@ import { User } from "../../types/user";
 import PopUp from "../popup/popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-const backgroundImage = import.meta.env.BASE_URL + "assets/background/view.hdr";
+const backgroundImage =
+  import.meta.env.BASE_URL + "assets/background/view3.hdr";
 
 // class ApiThienSuGiftService extends ApiGiftService {
 //   public getPromoteProducts(...args: any): Promise<Product[]> {
@@ -66,12 +67,10 @@ const FallingContainer = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate background loading delay
     const backgroundLoader = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
 
-    // Clean up the loader when the component unmounts
     return () => clearTimeout(backgroundLoader);
   }, []);
 
@@ -93,7 +92,7 @@ const FallingContainer = () => {
         {isUserClicked && (
           <PopUp setIsUserClicked={setIsUserClicked} product={product} />
         )}
-        <Canvas>
+        <Canvas camera={{ position: [-60, 10, 10], rotation: [200, 200, 200] }}>
           <Environment files={backgroundImage} background />
           <XR>
             <FallingManager

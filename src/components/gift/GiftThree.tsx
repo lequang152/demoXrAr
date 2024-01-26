@@ -11,7 +11,7 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { Group } from "three";
 import { RefObject, useEffect, useRef, useState } from "react";
 import useSound from "use-sound";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import ExplosionEffect from "../effect/ExplosionEffect";
 import { IProps } from "../../types/gift.props";
 import { calculateFallSpeed, useGift } from "./common";
