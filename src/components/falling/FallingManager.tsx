@@ -21,6 +21,8 @@ function randomProducts(products: Product[]) {
 
   productsCopy.push(MOCK_UNDEFINED_PRODUCT);
 
+  console.log(MOCK_UNDEFINED_PRODUCT);
+
   const totalProbability = productsCopy.reduce(
     (sum, product) => sum + product.probability,
     0
@@ -49,8 +51,6 @@ const FallingManager = ({
 
   const [products, ,] = useProducts();
 
-  // const [showModal, setShowModal] = useState(false);
-  //giới hạn lượt chơi
   const count = useRef(1);
 
   React.useLayoutEffect(() => {
@@ -60,7 +60,7 @@ const FallingManager = ({
     }
 
     const spawnFallingDog = () => {
-      const numberOfDogs = 30; // Số lượng hộp quà muốn xuất hiện cùng một lúc
+      const numberOfDogs = 30;
 
       for (let i = 0; i < numberOfDogs; i++) {
         const randomX = Math.random() * 80 - 40;
@@ -92,16 +92,16 @@ const FallingManager = ({
 
     let spawnInterval: NodeJS.Timeout | undefined = undefined;
     if (!isUserClicked) {
-      spawnInterval = setInterval(spawnFallingDog, 5000);
+      spawnInterval = setInterval(spawnFallingDog, 10000);
     }
-    return () => {
-      if (spawnInterval) {
-        clearInterval(spawnInterval);
-      }
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
+    // return () => {
+    //   if (spawnInterval) {
+    //     clearInterval(spawnInterval);
+    //   }
+    //   if (timeoutId) {
+    //     clearTimeout(timeoutId);
+    //   }
+    // };
   }, [isUserClicked]);
 
   return count.current > 0 ? (
