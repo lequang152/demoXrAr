@@ -66,7 +66,7 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
       //   worldPosition.y < 0 ||
       //   worldPosition.y > clientHeight;
       const distance = ref.current.position.distanceTo(camera.position);
-      const newSize = 1 + 40 / distance;
+      const newSize = 1 + 75 / distance;
 
       ref.current.position.y -= calculateFallSpeed(); // Điều chỉnh tốc độ rơi
       ref.current.scale.set(newSize, newSize, newSize);

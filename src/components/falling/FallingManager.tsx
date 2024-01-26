@@ -53,7 +53,7 @@ const FallingManager = ({
   setIsUserClicked,
   setProduct,
 }: IProps) => {
-  const [fallingComponents, setFallingComponents] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
+  const [fallingComponents, setFallingComponents] = useState<JSX.Element[]>([]);
   const numberOfGifts = Number(process.env.REACT_APP_MAX_GIFT) || 30;
   const [products, ,] = useProducts();
 
@@ -92,7 +92,7 @@ const FallingManager = ({
 
         return [...pre, c];
       });
-    }, 1000);
+    }, 500);
     return () => {
       clearTimeout(x);
     };
