@@ -17,17 +17,23 @@ function randomProducts(products: Product[]) {
     return undefined;
   }
 
-  const productsCopy = Array.from(products);
-
-  productsCopy.push(MOCK_UNDEFINED_PRODUCT);
-
-  console.log(MOCK_UNDEFINED_PRODUCT);
+  const productsCopy: Product[] = [
+    MOCK_UNDEFINED_PRODUCT,
+    MOCK_UNDEFINED_PRODUCT,
+    MOCK_UNDEFINED_PRODUCT,
+    MOCK_UNDEFINED_PRODUCT,
+    MOCK_UNDEFINED_PRODUCT,
+    MOCK_UNDEFINED_PRODUCT,
+    MOCK_UNDEFINED_PRODUCT,
+  ];
+  const x = Array.from(products);
+  productsCopy.push(...x);
 
   const totalProbability = productsCopy.reduce(
     (sum, product) => sum + product.probability,
     0
   );
-  const randomValue = Math.random() * totalProbability;
+  let randomValue = Math.random() * totalProbability;
 
   let cumulativeProbability = 0;
   for (const product of productsCopy) {
@@ -47,70 +53,90 @@ const FallingManager = ({
   setIsUserClicked,
   setProduct,
 }: IProps) => {
-  const [fallingDogs, setFallingDogs] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
-
+  const [fallingComponents, setFallingComponents] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
+  const numberOfGifts = Number(process.env.REACT_APP_MAX_GIFT) || 30;
   const [products, ,] = useProducts();
 
   // const [showModal, setShowModal] = useState(false);
   //giới hạn lượt chơi
   const count = useRef(99);
 
-  React.useEffect(() => {
-    let timeoutId: NodeJS.Timeout | undefined = undefined;
-    if (isUserClicked) {
-      count.current--;
-    }
-
-    const spawnFallingDog = () => {
-      const numberOfGifts = 30; // Số lượng hộp quà muốn xuất hiện cùng một lúc
-
-      for (let i = 0; i < numberOfGifts; i++) {
-        const randomX = Math.random() * 80 - 40;
-        const randomZ = Math.random() * 120 - 60;
-        const randomY = Math.random() * 100;
-        const randomProduct = randomProducts(products);
-
-        if (!isUserClicked) {
-          setProduct(randomProduct);
-        }
-
-        const position = new Vector3(randomX, randomY, randomZ);
-
-        let fallingDog = giftFactory({
-          product: randomProduct,
-          onClick: setIsUserClicked,
-          position: position,
-        });
-        setFallingDogs((prevDogs) => [...prevDogs, fallingDog]);
-
-        timeoutId = setTimeout(() => {
-          setFallingDogs((prevDogs) =>
-            prevDogs.filter((dog) => dog !== fallingDog)
-          );
-        }, 5000);
-      }
-    };
-
-    let spawnInterval: NodeJS.Timeout | undefined = undefined;
+  const randomGiftComponent = () => {
+    const randomX = Math.random() * 80 - 40;
+    const randomZ = Math.random() * 120 - 60;
+    const randomY = Math.random() * 100;
+    const randomProduct = randomProducts(products);
     if (!isUserClicked) {
-      spawnInterval = setInterval(spawnFallingDog, 10000);
+      setProduct(randomProduct);
     }
-    // return () => {
-    //   if (spawnInterval) {
-    //     clearInterval(spawnInterval);
-    //   }
-    //   if (timeoutId) {
-    //     clearTimeout(timeoutId);
-    //   }
-    // };
-  }, [isUserClicked]);
+    const position = new Vector3(randomX, randomY, randomZ);
+    let fallingDog = giftFactory({
+      product: randomProduct,
+      onClick: setIsUserClicked,
+      position: position,
+    });
+    return fallingDog;
+  };
+
+  React.useEffect(() => {
+    if (fallingComponents.length > numberOfGifts) {
+      setFallingComponents((pre) => {
+        return pre.slice(pre.length / 2);
+      });
+    }
+
+    let x = setTimeout(() => {
+      let timeout: NodeJS.Timeout;
+      setFallingComponents((pre) => {
+        const c = randomGiftComponent();
+
+        return [...pre, c];
+      });
+    }, 1000);
+    return () => {
+      clearTimeout(x);
+    };
+  }, [fallingComponents.length]);
+  // React.useEffect(() => {
+  //   let timeoutId: NodeJS.Timeout | undefined = undefined;
+  //   if (isUserClicked) {
+  //     count.current--;
+  //   }
+
+  //   const spawnFallingComponent = () => {
+  //     for (let i = 0; i < numberOfGifts; i++) {
+  //       const fallingDog = randomGiftComponent();
+
+  //       setFallingComponents((prevDogs) => [...prevDogs, fallingDog]);
+
+  //       timeoutId = setTimeout(() => {
+  //         setFallingComponents((prevDogs) =>
+  //           prevDogs.filter((dog) => dog !== fallingDog)
+  //         );
+  //       }, 5000);
+  //     }
+  //   };
+
+  //   let spawnInterval: NodeJS.Timeout | undefined = undefined;
+  //   if (!isUserClicked) {
+  //     spawnInterval = setInterval(spawnFallingComponent, 10000);
+  //   }
+  //   return () => {
+  //     if (spawnInterval) {
+  //       clearInterval(spawnInterval);
+  //     }
+  //     if (timeoutId) {
+  //       clearTimeout(timeoutId);
+  //     }
+  //   };
+  // }, [isUserClicked]);
 
   return count.current > 0 ? (
     <>
       <OrbitControls enableZoom={false} />
-      {fallingDogs.map((dog, index) => (
+      {fallingComponents.map((c, index) => (
         // Thêm thuộc tính key với giá trị index
-        <React.Fragment key={index}>{dog}</React.Fragment>
+        <React.Fragment key={index}>{c}</React.Fragment>
       ))}
     </>
   ) : (

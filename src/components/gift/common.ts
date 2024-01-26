@@ -5,14 +5,11 @@ import { Group, Vector3 } from "three";
 import useSound from "use-sound";
 import { IProps } from "../../types/gift.props";
 
-export const calculateFallSpeed = (probability: number | undefined): number => {
-  let defaultFallSpeed = probability ? probability * 2 : 0.5;
+export const calculateFallSpeed = (): number => {
+  const speeds = [0.3, 0.4, 0.5, 0.8, 0.9, 1];
+  const rSpeed = Math.ceil(Math.random() * speeds.length) - 1;
 
-  let x = Math.random() * defaultFallSpeed;
-  if (x == 0) {
-    x = 0.1;
-  }
-  return x;
+  return speeds[rSpeed];
 };
 
 export function useGift({ onClick, position, product }: IProps, model: string) {
@@ -68,7 +65,7 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
       //   worldPosition.y < 0 ||
       //   worldPosition.y > clientHeight;
 
-      ref.current.position.y -= calculateFallSpeed(product?.probability); // Điều chỉnh tốc độ rơi
+      ref.current.position.y -= calculateFallSpeed(); // Điều chỉnh tốc độ rơi
       ref.current.scale.set(0.5, 0.5, 0.5);
       ref.current.rotation.y += 0.1;
     }
