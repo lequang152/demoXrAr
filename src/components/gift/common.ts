@@ -1,5 +1,5 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Group, Vector3 } from "three";
 import useSound from "use-sound";
@@ -14,6 +14,7 @@ export const calculateFallSpeed = (): number => {
 
 export function useGift({ onClick, position, product }: IProps, model: string) {
   const ref = useRef<Group>(null) as RefObject<Group>;
+  const camera = useThree().camera;
 
   const { nodes, materials, animations } = useGLTF(model) as any;
 
@@ -64,9 +65,11 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
       //   worldPosition.x > clientWidth ||
       //   worldPosition.y < 0 ||
       //   worldPosition.y > clientHeight;
+      const distance = ref.current.position.distanceTo(camera.position);
+      const newSize = 1 + 40 / distance;
 
       ref.current.position.y -= calculateFallSpeed(); // Điều chỉnh tốc độ rơi
-      ref.current.scale.set(0.5, 0.5, 0.5);
+      ref.current.scale.set(newSize, newSize, newSize);
       ref.current.rotation.y += 0.1;
     }
   });
