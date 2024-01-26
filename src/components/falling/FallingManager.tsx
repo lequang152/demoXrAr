@@ -21,8 +21,6 @@ function randomProducts(products: Product[]) {
 
   productsCopy.push(MOCK_UNDEFINED_PRODUCT);
 
-  console.log(MOCK_UNDEFINED_PRODUCT);
-
   const totalProbability = productsCopy.reduce(
     (sum, product) => sum + product.probability,
     0
@@ -47,7 +45,7 @@ const FallingManager = ({
   setIsUserClicked,
   setProduct,
 }: IProps) => {
-  const [fallingDogs, setFallingDogs] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
+  const [fallingGifts, setFallingGifts] = useState<JSX.Element[]>([]); // Use JSX.Element[] as the type
 
   const [products, ,] = useProducts();
 
@@ -55,13 +53,13 @@ const FallingManager = ({
   //giới hạn lượt chơi
   const count = useRef(99);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined = undefined;
     if (isUserClicked) {
       count.current--;
     }
 
-    const spawnFallingDog = () => {
+    const spawnFallingGifts = () => {
       const numberOfGifts = 30; // Số lượng hộp quà muốn xuất hiện cùng một lúc
 
       for (let i = 0; i < numberOfGifts; i++) {
@@ -76,16 +74,16 @@ const FallingManager = ({
 
         const position = new Vector3(randomX, randomY, randomZ);
 
-        let fallingDog = giftFactory({
+        let fallingGift = giftFactory({
           product: randomProduct,
           onClick: setIsUserClicked,
           position: position,
         });
-        setFallingDogs((prevDogs) => [...prevDogs, fallingDog]);
+        setFallingGifts((prevGifts) => [...prevGifts, fallingGift]);
 
         timeoutId = setTimeout(() => {
-          setFallingDogs((prevDogs) =>
-            prevDogs.filter((dog) => dog !== fallingDog)
+          setFallingGifts((prevGifts) =>
+            prevGifts.filter((gift) => gift !== fallingGift)
           );
         }, 5000);
       }
@@ -93,24 +91,24 @@ const FallingManager = ({
 
     let spawnInterval: NodeJS.Timeout | undefined = undefined;
     if (!isUserClicked) {
-      spawnInterval = setInterval(spawnFallingDog, 10000);
+      spawnInterval = setInterval(spawnFallingGifts, 5000);
     }
-    // return () => {
-    //   if (spawnInterval) {
-    //     clearInterval(spawnInterval);
-    //   }
-    //   if (timeoutId) {
-    //     clearTimeout(timeoutId);
-    //   }
-    // };
+    return () => {
+      if (spawnInterval) {
+        clearInterval(spawnInterval);
+      }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [isUserClicked]);
 
   return count.current > 0 ? (
     <>
       <OrbitControls enableZoom={false} />
-      {fallingDogs.map((dog, index) => (
+      {fallingGifts.map((gift, index) => (
         // Thêm thuộc tính key với giá trị index
-        <React.Fragment key={index}>{dog}</React.Fragment>
+        <React.Fragment key={index}>{gift}</React.Fragment>
       ))}
     </>
   ) : (

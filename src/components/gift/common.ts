@@ -1,22 +1,20 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Group, Vector3 } from "three";
 import useSound from "use-sound";
 import { IProps } from "../../types/gift.props";
 
-export const calculateFallSpeed = (probability: number | undefined): number => {
-  let defaultFallSpeed = probability ? probability * 2 : 0.5;
-
-  let x = Math.random() * defaultFallSpeed;
-  if (x == 0) {
-    x = 0.1;
-  }
-  return x;
+export const calculateFallSpeed = (): number => { 
+  const speeds = [0.3, 0.4, 0.5, 0.8, 0.9, 1]; 
+  const rSpeed = Math.ceil(Math.random() * speeds.length) - 1; 
+ 
+  return speeds[rSpeed]; 
 };
 
 export function useGift({ onClick, position, product }: IProps, model: string) {
   const ref = useRef<Group>(null) as RefObject<Group>;
+  const camera = useThree().camera;
 
   const { nodes, materials, animations } = useGLTF(model) as any;
 
@@ -67,9 +65,11 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
       //   worldPosition.x > clientWidth ||
       //   worldPosition.y < 0 ||
       //   worldPosition.y > clientHeight;
+      const distance = ref.current.position.distanceTo(camera.position);
+      const newSize = 1 + 40 / distance;
 
-      ref.current.position.y -= calculateFallSpeed(product?.probability); // Điều chỉnh tốc độ rơi
-      ref.current.scale.set(0.5, 0.5, 0.5);
+      ref.current.position.y -= calculateFallSpeed(); // Điều chỉnh tốc độ rơi
+      ref.current.scale.set(newSize, newSize, newSize);
       ref.current.rotation.y += 0.1;
     }
   });
