@@ -27,7 +27,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "https://thgreenvietnam.com/hoa-pham/nuoc-rua-chen-tinh-chat-gao-cao-cap-elysa-800ml-p157",
     image:
       "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa403f714a4.png",
-    probability: 0.1,
+    probability: 0.001,
     description: `
         Giới thiệu
     Nước rửa chén tinh chất gạo cao cấp Th Green 800ml
@@ -57,7 +57,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "https://thgreenvietnam.com/hoa-pham/nuoc-giat-xa-cao-cap-elysa-6in1-huong-tulip-4600ml-p138",
     image:
       "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa3d9bdc587.png",
-    probability: 0.5,
+    probability: 0.05,
     description: `
       Giới thiệu
   Nước giặt xả cao cấp Elysa 6in1 Hương Tulip 4600ml
@@ -90,7 +90,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "https://thgreenvietnam.com/hoa-pham/nuoc-tay-da-nang-elysa-500ml-p132",
     image:
       "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa4654deeca.png",
-    probability: 0.2,
+    probability: 0.02,
     description: `
     Giới thiệu
     TẨY ĐA NĂNG ELYSA 500ml - Số tiêu chuẩn cơ sở Nhật Bản JIS K 3370:2019
@@ -114,7 +114,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 250000,
     saleLink: "",
     image: "",
-    probability: 0.1,
+    probability: 0.05,
     description: "Giữ ấm cho mùa đông Hà Nội.",
   },
   {
@@ -123,7 +123,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 2000000,
     saleLink: "",
     image: "",
-    probability: 0.05,
+    probability: 0.01,
     description: "Đôi giày chạy cao cấp từ Adidas",
   },
 ];

@@ -11,41 +11,71 @@ interface IProps {
   setIsUserClicked: (value: any) => void;
   setProduct: (value: any) => void;
 }
+function shuffleArray(array: any[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+function getFactor(x: number) {
+  if (x >= 1) {
+    return 10;
+  }
+
+  let c = 1;
+  while (x < 10) {
+    x = x * 10;
+    c++;
+  }
+
+  return 0.01 * Math.pow(10, c);
+}
 
 function randomProducts(products: Product[]) {
   if (products.length === 0) {
     return undefined;
   }
 
-  const productsCopy: Product[] = [
-    MOCK_UNDEFINED_PRODUCT,
-    MOCK_UNDEFINED_PRODUCT,
-    MOCK_UNDEFINED_PRODUCT,
-    MOCK_UNDEFINED_PRODUCT,
-    MOCK_UNDEFINED_PRODUCT,
-    MOCK_UNDEFINED_PRODUCT,
-    MOCK_UNDEFINED_PRODUCT,
-  ];
+  let productsCopy: Product[] = [MOCK_UNDEFINED_PRODUCT];
   const x = Array.from(products);
   productsCopy.push(...x);
 
-  const totalProbability = productsCopy.reduce(
-    (sum, product) => sum + product.probability,
-    0
-  );
-  let randomValue = Math.random() * totalProbability;
+  let prods = [];
 
-  let cumulativeProbability = 0;
-  for (const product of productsCopy) {
-    cumulativeProbability += product.probability;
-    if (randomValue <= cumulativeProbability) {
-      if (product.id == undefined) {
-        return undefined;
-      }
-      return product;
+  let min = 99999;
+
+  for (let p of products) {
+    if (p.probability < min) {
+      min = p.probability;
     }
   }
-  return undefined;
+
+  let factor = getFactor(min);
+  for (let p of productsCopy) {
+    let prob = Math.round(p.probability * factor);
+
+    if (prob < 0) {
+      prob = 1;
+    }
+
+    while (prob > 0) {
+      prods.push(p);
+      prob--;
+    }
+  }
+
+  prods = shuffleArray(prods);
+
+  let randomValue = Math.ceil(Math.random() * prods.length) - 1;
+
+  const rand = prods[randomValue];
+
+  if (rand.id == undefined) {
+    return undefined;
+  }
+
+  return rand;
 }
 
 const FallingManager = ({
@@ -66,6 +96,8 @@ const FallingManager = ({
     const randomZ = Math.random() * 120 - 60;
     const randomY = Math.random() * 100;
     const randomProduct = randomProducts(products);
+    console.log(randomProduct);
+
     if (!isUserClicked) {
       setProduct(randomProduct);
     }
@@ -97,43 +129,9 @@ const FallingManager = ({
       clearTimeout(x);
     };
   }, [fallingComponents.length]);
-  // React.useEffect(() => {
-  //   let timeoutId: NodeJS.Timeout | undefined = undefined;
-  //   if (isUserClicked) {
-  //     count.current--;
-  //   }
-
-  //   const spawnFallingComponent = () => {
-  //     for (let i = 0; i < numberOfGifts; i++) {
-  //       const fallingDog = randomGiftComponent();
-
-  //       setFallingComponents((prevDogs) => [...prevDogs, fallingDog]);
-
-  //       timeoutId = setTimeout(() => {
-  //         setFallingComponents((prevDogs) =>
-  //           prevDogs.filter((dog) => dog !== fallingDog)
-  //         );
-  //       }, 5000);
-  //     }
-  //   };
-
-  //   let spawnInterval: NodeJS.Timeout | undefined = undefined;
-  //   if (!isUserClicked) {
-  //     spawnInterval = setInterval(spawnFallingComponent, 10000);
-  //   }
-  //   return () => {
-  //     if (spawnInterval) {
-  //       clearInterval(spawnInterval);
-  //     }
-  //     if (timeoutId) {
-  //       clearTimeout(timeoutId);
-  //     }
-  //   };
-  // }, [isUserClicked]);
 
   return count.current > 0 ? (
     <>
-      <OrbitControls enableZoom={false} />
       {fallingComponents.map((c, index) => (
         // Thêm thuộc tính key với giá trị index
         <React.Fragment key={index}>{c}</React.Fragment>

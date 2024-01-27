@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { XR } from "@react-three/xr";
-import { Environment } from "@react-three/drei";
+import { Environment, Image, Plane, useTexture } from "@react-three/drei";
 import FallingManager from "./FallingManager";
 import { useEffect, useState } from "react";
 import { ApiGiftService } from "../service/api";
@@ -12,9 +12,10 @@ import { User } from "../../types/user";
 import PopUp from "../popup/popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Angle from "../background/Angle";
+import { TextureLoader } from "three";
 const backgroundImage =
-  import.meta.env.BASE_URL + "assets/background/view3.hdr";
-
+  import.meta.env.BASE_URL + "assets/background/angle.png";
 // class ApiThienSuGiftService extends ApiGiftService {
 //   public getPromoteProducts(...args: any): Promise<Product[]> {
 //     return new Promise((resolve, reject) => {
@@ -65,7 +66,6 @@ const FallingContainer = () => {
   const [isUserClicked, setIsUserClicked] = useState(false);
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const backgroundLoader = setTimeout(() => {
       setIsLoading(false);
@@ -92,8 +92,31 @@ const FallingContainer = () => {
         {isUserClicked && (
           <PopUp setIsUserClicked={setIsUserClicked} product={product} />
         )}
-        <Canvas camera={{ position: [-60, 10, 10], rotation: [200, 200, 200] }}>
-          <Environment files={backgroundImage} background />
+        <img
+          style={{
+            position: "absolute",
+            height: "100%",
+            width: "100%",
+            objectFit: "cover",
+          }}
+          src={backgroundImage}
+        />
+        <Canvas
+          camera={{
+            position: [-60, 10, 10],
+            rotation: [300, 300, 300],
+            zoom: 0.5,
+            aspect: 0.5,
+          }}
+        >
+          <Environment
+            preset="city"
+            // extensions={(loader) => {
+            //   loader.load(backgroundImage, (data) => {});
+            // }}
+            // files={backgroundImage}
+            // background
+          />
           <XR>
             <FallingManager
               isUserClicked={isUserClicked}
