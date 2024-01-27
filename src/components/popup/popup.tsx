@@ -42,7 +42,7 @@ function PopUp({ setIsUserClicked, product }: IProps) {
       const element = descriptionRef.current;
       if (element) {
         const lineHeight = parseInt(getComputedStyle(element).lineHeight);
-        const maxHeight = lineHeight * 4; // 4 dòng
+        const maxHeight = lineHeight * 2; // 4 dòng
         const isOverflowed = element.scrollHeight > maxHeight;
         setIsExpanded(isOverflowed);
       }
@@ -117,11 +117,12 @@ function PopUp({ setIsUserClicked, product }: IProps) {
       </button>
       {product ? (
         <div>
-          <div style={{ position: "relative" }}>
+          <div className={styles["header"]} style={{ position: "relative" }}>
             <FontAwesomeIcon
+              className={styles["giftIcon"]}
               icon={faGift}
               flip="horizontal"
-              style={{ color: "#63E6BE", fontSize: 100, marginBottom: 10 }}
+              style={{ color: "#63E6BE", marginBottom: 10 }}
             />
             {generateRandomElements(faStar, 2, false)}
             {generateRandomElements(faStar, 2, true)}
@@ -135,6 +136,8 @@ function PopUp({ setIsUserClicked, product }: IProps) {
             Bạn đã nhận được phần thưởng là 1 sản phẩm:{" "}
             <span style={{ fontWeight: 600 }}>{product.name}</span>
           </div>
+          <Image className={styles["image"]} src={product.image} rounded />
+
           <div ref={descriptionRef} className={`${styles.description}`}>
             {" "}
             {product.description}
@@ -144,7 +147,6 @@ function PopUp({ setIsUserClicked, product }: IProps) {
               <a href={product.saleLink}>xem thêm</a>
             </div>
           )}
-          <Image src={product.image} rounded width={100} />
           <div style={{ marginTop: 10 }}>
             <Button
               href="/"
@@ -182,7 +184,8 @@ function PopUp({ setIsUserClicked, product }: IProps) {
             Cảm ơn bạn đã tham gia chương trình.
           </div>
           <div
-            style={{ textAlign: "center", fontWeight: 500, marginBottom: 10 }}
+            className={styles.endDescription}
+            style={{ textAlign: "center", fontWeight: 500 }}
           >
             Chúc bạn may mắn hơn ở những sự kiện lần sau !
           </div>

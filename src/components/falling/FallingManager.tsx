@@ -94,9 +94,8 @@ const FallingManager = ({
   const randomGiftComponent = () => {
     const randomX = Math.random() * 80 - 40;
     const randomZ = Math.random() * 120 - 60;
-    const randomY = Math.random() * 100;
+    const randomY = Math.random() * 200;
     const randomProduct = randomProducts(products);
-    console.log(randomProduct);
 
     if (!isUserClicked) {
       setProduct(randomProduct);
