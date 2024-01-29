@@ -18,15 +18,16 @@
 
   </style>
   <body>
-    <a-scene
+  
+    <div id="root">
+          <a-scene
       class="a-scene"
       vr-mode-ui="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
       embedded
       arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
-  >      
-    <div id="root"></div>
-    <a-nft
+  >    
+  <a-nft
       type="nft"
       class="a-nft"
       smooth="true"
@@ -35,6 +36,8 @@
       smoothThreshold="5"
   >
   </a-nft>
+    </div>
+    
       <a-entity camera></a-entity>
     </a-scene>
 

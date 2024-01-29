@@ -1,0 +1,15 @@
+version: "3"
+services:
+  web:
+    image: thiensu
+    container_name: thiensu
+    restart: unless-stopped
+    ports:
+      - "1809:4173"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: web-network
+    driver: bridge

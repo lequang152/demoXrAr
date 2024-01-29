@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { XR } from "@react-three/xr";
-import { Environment } from "@react-three/drei";
+import { Environment, OrbitControls } from "@react-three/drei";
 import FallingManager from "./FallingManager";
 import { useEffect, useState } from "react";
 import { ApiGiftService } from "../service/api";
@@ -13,6 +13,7 @@ import PopUp from "../popup/popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@mui/material";
+import { Vector3 } from "three";
 const backgroundImage =
   import.meta.env.BASE_URL + "assets/background/view3.hdr";
 
@@ -113,18 +114,26 @@ const FallingContainer = () => {
           <PopUp setIsUserClicked={setIsUserClicked} product={product} />
         )}
         {isReady && (
-          <Canvas
-            camera={{ position: [-60, 10, 10], rotation: [200, 200, 200] }}
+          <div
+            style={{
+              width: "100vw",
+              height: "100vh",
+            }}
           >
-            <Environment preset="city" />
-            <XR>
-              <FallingManager
-                isUserClicked={isUserClicked}
-                setIsUserClicked={setIsUserClicked}
-                setProduct={setProduct}
-              />
-            </XR>
-          </Canvas>
+            <Canvas
+              camera={{ position: [-60, 10, 10], rotation: [200, 200, 200] }}
+            >
+              <OrbitControls position={new Vector3(0, 0, 0)} />
+              <Environment preset="city" />
+              <XR>
+                <FallingManager
+                  isUserClicked={isUserClicked}
+                  setIsUserClicked={setIsUserClicked}
+                  setProduct={setProduct}
+                />
+              </XR>
+            </Canvas>
+          </div>
         )}
       </ProductProvider>
     </>
