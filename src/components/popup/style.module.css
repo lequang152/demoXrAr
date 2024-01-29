@@ -40,11 +40,15 @@
   outline: none;
 }
 
+.giftIcon {
+  font-size: 100px;
+}
+
 .description {
   text-align: justify;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* Số dòng muốn hiển thị */
+  -webkit-line-clamp: 1; /* Số dòng muốn hiển thị */
   -webkit-box-orient: vertical;
   hyphens: auto;
 }
@@ -66,6 +70,165 @@
 
 .readMore a:hover {
   text-decoration: underline;
+}
+
+.image {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 120px;
+}
+
+.endDescription {
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 280px) {
+  .box {
+    min-width: 250px;
+  }
+}
+
+@media only screen and (min-width: 300px) {
+  .image {
+    width: 130px;
+  }
+}
+
+@media only screen and (min-width: 375px) {
+  .image {
+    width: 150px;
+  }
+}
+
+@media only screen and (min-width: 400px) {
+  .box {
+    min-width: 340px;
+  }
+  .image {
+    width: 180px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .image {
+    width: 250px;
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+  /* For portrait layouts only */
+  .box {
+    min-height: 200px;
+  }
+
+  .giftIcon {
+    font-size: 75px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .image {
+    width: 90px;
+  }
+  .description {
+    -webkit-line-clamp: 1; /* Số dòng muốn hiển thị */
+  }
+}
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 896px) and (orientation: landscape) {
+  /* For portrait layouts only */
+  .box {
+    min-height: 340px;
+  }
+
+  .giftIcon {
+    font-size: 75px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .image {
+    width: 120px;
+  }
+  .description {
+    -webkit-line-clamp: 1; /* Số dòng muốn hiển thị */
+  }
+
+  .endDescription {
+    margin-bottom: 25px;
+  }
+}
+
+@media only screen and (min-device-width: 390px) and (max-device-width: 844px) and (orientation: landscape) {
+  .image {
+    width: 110px;
+  }
+}
+
+@media only screen and (min-device-width: 430px) and (max-device-width: 932px) and (orientation: landscape) {
+  .box {
+    min-height: 350px;
+  }
+
+  .giftIcon {
+    font-size: 75px;
+  }
+
+  .title {
+    font-size: 30px;
+    margin-bottom: 4px;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .image {
+    width: 140px;
+  }
+  .description {
+    -webkit-line-clamp: 1; /* Số dòng muốn hiển thị */
+  }
+
+  .endDescription {
+    margin-bottom: 35px;
+  }
+}
+
+@media only screen and (min-device-width: 412px) and (max-device-width: 915px) and (orientation: landscape) {
+  .title {
+    font-size: 24px;
+  }
+  .box {
+    min-height: 380px;
+  }
+  .image {
+    width: 140px;
+  }
+
+  .endDescription {
+    margin-bottom: 36px;
+  }
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 740px) and (orientation: landscape) {
+  .image {
+    width: 100px;
+  }
 }
 
 /* @keyframes rotate {

@@ -19,6 +19,27 @@
   font-family: monospace;
 }
 
+.button-start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #e4ffff;
+}
+
+.button-start .textButton {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.button {
+  text-align: center;
+}
+
 @keyframes fadeInOut {
   0%,
   100% {

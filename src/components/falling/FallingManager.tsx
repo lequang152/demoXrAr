@@ -133,7 +133,6 @@ const FallingManager = ({
 
   return count.current > 0 ? (
     <>
-      <OrbitControls enableZoom={false} />
       {fallingComponents.map((c, index) => (
         // Thêm thuộc tính key với giá trị index
         <React.Fragment key={index}>{c}</React.Fragment>

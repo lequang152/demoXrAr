@@ -12,6 +12,7 @@ import { User } from "../../types/user";
 import PopUp from "../popup/popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@mui/material";
 const backgroundImage =
   import.meta.env.BASE_URL + "assets/background/view3.hdr";
 
@@ -64,20 +65,39 @@ const FallingContainer = () => {
   const service: ApiGiftService = new ApiThienSuGiftService();
   const [isUserClicked, setIsUserClicked] = useState(false);
   const [product, setProduct] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
+  const [isReady, setIsReady] = useState(false);
 
-  useEffect(() => {
-    const backgroundLoader = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+  // useEffect(() => {
+  //   const backgroundLoader = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 1000);
 
-    return () => clearTimeout(backgroundLoader);
-  }, []);
+  //   return () => clearTimeout(backgroundLoader);
+  // }, []);
+
+  const handleStartClick = () => {
+    setIsReady(true);
+  };
 
   return (
     <>
       <ProductProvider service={service}>
-        {isLoading && (
+        {!isReady && (
+          <div className={styles["button-start"]}>
+            <div className={styles["textButton"]}>Are you ready?</div>
+            <div className={styles["button"]}>
+              <Button
+                sx={{ backgroundColor: "#5798b7" }}
+                variant="contained"
+                onClick={handleStartClick}
+              >
+                Start
+              </Button>
+            </div>
+          </div>
+        )}
+        {/* {isLoading && isReady && (
           <div className={styles.loading}>
             <span>
               <FontAwesomeIcon
@@ -88,20 +108,24 @@ const FallingContainer = () => {
             </span>
             <span className={styles.text}>Loading...</span>{" "}
           </div>
-        )}
+        )} */}
         {isUserClicked && (
           <PopUp setIsUserClicked={setIsUserClicked} product={product} />
         )}
-        <Canvas camera={{ position: [-60, 10, 10], rotation: [200, 200, 200] }}>
-          <Environment files={backgroundImage} background />
-          <XR>
-            <FallingManager
-              isUserClicked={isUserClicked}
-              setIsUserClicked={setIsUserClicked}
-              setProduct={setProduct}
-            />
-          </XR>
-        </Canvas>
+        {isReady && (
+          <Canvas
+            camera={{ position: [-60, 10, 10], rotation: [200, 200, 200] }}
+          >
+            <Environment preset="city" />
+            <XR>
+              <FallingManager
+                isUserClicked={isUserClicked}
+                setIsUserClicked={setIsUserClicked}
+                setProduct={setProduct}
+              />
+            </XR>
+          </Canvas>
+        )}
       </ProductProvider>
     </>
   );
