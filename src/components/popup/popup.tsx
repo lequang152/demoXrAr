@@ -20,20 +20,8 @@ interface IProps {
 }
 
 function PopUp({ setIsUserClicked, product }: IProps) {
-  // let getProduct;
-  // const randomValue = Math.random();
-
-  // if (randomValue <= 0.7) {
-  //   getProduct = undefined;
-  // } else {
-  //   getProduct = product;
-  // }
-
   const [isVisible, setIsVisible] = useState(false);
   // const [products, setProducts, service] = useProducts();
-
-  const [, , service] = useProducts();
-
   const [isExpanded, setIsExpanded] = useState(false);
   const descriptionRef = useRef<HTMLDivElement>(null);
 
@@ -153,22 +141,8 @@ function PopUp({ setIsUserClicked, product }: IProps) {
               variant="contained"
               size="small"
               sx={{ backgroundColor: "#6daff1" }}
-              onClick={() => {
-                // chỗ này xử lý khi user click đổi quà
-                if (service) {
-                  service
-                    .userPickProduct(Number(product.id))
-                    .then(() => {
-                      navigator("/");
-                    })
-                    .catch((err: any) => {
-                      console.log(err);
-                      // handle error here
-                    });
-                }
-              }}
             >
-              Đổi Quà
+              Xác nhận
             </Button>
           </div>
         </div>

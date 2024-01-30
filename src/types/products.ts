@@ -6,6 +6,7 @@ export type Product = {
   image: string;
   probability: number; // xác suất xuất hiện, càng cao thì càng dễ ra
   description: string;
+  number?: number;
 };
 
 export const MOCK_UNDEFINED_PRODUCT = {
@@ -18,17 +19,16 @@ export const MOCK_UNDEFINED_PRODUCT = {
   saleLink: "",
 };
 
-export const MOCK_PRODUCTS: Product[] = [
-  {
-    id: 1,
-    name: "Nước rửa chén tinh chất gạo cao cấp Elysa 800ml",
-    price: 350000,
-    saleLink:
-      "https://thgreenvietnam.com/hoa-pham/nuoc-rua-chen-tinh-chat-gao-cao-cap-elysa-800ml-p157",
-    image:
-      "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa403f714a4.png",
-    probability: 0.1,
-    description: `
+const ruaChen: Product = {
+  id: 1,
+  name: "Nước rửa chén tinh chất gạo cao cấp Elysa 800ml",
+  price: 350000,
+  saleLink:
+    "https://thgreenvietnam.com/hoa-pham/nuoc-rua-chen-tinh-chat-gao-cao-cap-elysa-800ml-p157",
+  image:
+    "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa403f714a4.png",
+  probability: 0.1,
+  description: `
         Giới thiệu
     Nước rửa chén tinh chất gạo cao cấp Th Green 800ml
 
@@ -48,17 +48,18 @@ export const MOCK_PRODUCTS: Product[] = [
     BẢO QUẢN: Lưu trú nơi thoáng mát tránh ảnh nắng trực tiếp
     TCC$: 02/2019 EPOLVN/QPVN
     `,
-  },
-  {
-    id: 2,
-    name: "Nước giặt xả cao cấp Elysa 6in1 Hương Tulip 4600ml",
-    price: 260000,
-    saleLink:
-      "https://thgreenvietnam.com/hoa-pham/nuoc-giat-xa-cao-cap-elysa-6in1-huong-tulip-4600ml-p138",
-    image:
-      "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa3d9bdc587.png",
-    probability: 0.5,
-    description: `
+  number: 20,
+};
+const giatXa: Product = {
+  id: 2,
+  name: "Nước giặt xả cao cấp Elysa 6in1 Hương Tulip 4600ml",
+  price: 260000,
+  saleLink:
+    "https://thgreenvietnam.com/hoa-pham/nuoc-giat-xa-cao-cap-elysa-6in1-huong-tulip-4600ml-p138",
+  image:
+    "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa3d9bdc587.png",
+  probability: 0.5,
+  description: `
       Giới thiệu
   Nước giặt xả cao cấp Elysa 6in1 Hương Tulip 4600ml
 
@@ -81,49 +82,22 @@ export const MOCK_PRODUCTS: Product[] = [
   Giặt tay: Hòa 30-50ml dung dịch giặt xả, cho 10lít nước (dùng cho 10-15 bộ quần áo)
   Giặt máy: Cho 30-50ml dung dịch giặt xả (dùng cho 10-15 bộ quần áo). Nước giặt xả đậm đặc, đặc biệt an toàn cho quần áo trẻ nhỏ và mọi chất liệu lụa tơ tằm, len sợi cotton,...
     `,
-  },
-  {
-    id: 3,
-    name: "Nước tẩy đa năng Elysa 500ml",
-    price: 100000,
-    saleLink:
-      "https://thgreenvietnam.com/hoa-pham/nuoc-tay-da-nang-elysa-500ml-p132",
-    image:
-      "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa4654deeca.png",
-    probability: 0.2,
-    description: `
-    Giới thiệu
-    TẨY ĐA NĂNG ELYSA 500ml - Số tiêu chuẩn cơ sở Nhật Bản JIS K 3370:2019
+  number: 30,
+};
+const noi: Product = {
+  id: 3,
+  name: "Nồi nấu cao cấp",
+  price: 260000,
+  saleLink:
+    "https://thgreenvietnam.com/hoa-pham/nuoc-giat-xa-cao-cap-elysa-6in1-huong-tulip-4600ml-p138",
+  image:
+    "https://stc.thgreenvietnam.com/uploads/2024/01/19/1_i65aa3d9bdc587.png",
+  probability: 0.5,
+  description: `Bộ nồi nấu cao cấp`,
+  number: 15,
+};
+let MOCK_PRODUCTS: Product[] = [];
 
-    NGUYÊN LIỆU TỰ NHIÊN NHẬP KHẨU CHÂU ÂU
-
-    Sodium lauryl Ether Sulfate, Acrylates copolymer Iso propyl alcohol, chất Toff
-
-    CÔNG NGHỆ SINH HỌC VƯỢT TRỘI - AN TOÀN  
-
-    Với công thức đa tác dụng sẽ giúp bạn lau, rửa sạch và diệt khuẩn cho mọi bề mặt và mang lại hương hoa thơm mát
-
-    Với công thức độc đáo, giúp làm sạch mọi vết bẩn, ngay cả những vết bẩn lâu ngày, vết dầu mỡ, vết rỉ sét cặn xà phòng... Trả lại vẻ sáng bóng cho gian bếp và phòng tắm. Sản phẩm hiệu quả cho mọi bề mặt từ bề mặt gạch, men,..
-
-    Đồng thời lưu hương thơm tươi mát, đem đến không gian dễ chịu tại nơi sử dụng.
-    `,
-  },
-  {
-    id: 4,
-    name: "Áo giữ nhiệt",
-    price: 250000,
-    saleLink: "",
-    image: "",
-    probability: 0.1,
-    description: "Giữ ấm cho mùa đông Hà Nội.",
-  },
-  {
-    id: 5,
-    name: "Giày thể thao Adidas cao cấp",
-    price: 2000000,
-    saleLink: "",
-    image: "",
-    probability: 0.05,
-    description: "Đôi giày chạy cao cấp từ Adidas",
-  },
-];
+export const MOCK_PRODUCT = {
+  products: MOCK_PRODUCTS,
+};

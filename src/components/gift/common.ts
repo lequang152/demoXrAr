@@ -4,6 +4,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { Group, Vector3 } from "three";
 import useSound from "use-sound";
 import { IProps } from "../../types/gift.props";
+import { useProducts } from "../context/product.context";
 
 export const calculateFallSpeed = (): number => {
   const speeds = [0.3, 0.4, 0.5, 0.8, 0.9, 1];
@@ -15,7 +16,7 @@ export const calculateFallSpeed = (): number => {
 export function useGift({ onClick, position, product }: IProps, model: string) {
   const ref = useRef<Group>(null) as RefObject<Group>;
   const camera = useThree().camera;
-
+  const [, , service] = useProducts();
   const { nodes, materials, animations } = useGLTF(model) as any;
 
   const { actions } = useAnimations(animations, ref);
@@ -23,48 +24,54 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
   const [exploding, setExploding] = useState(false);
   const [giftPosition, setGiftPosition] = useState(position);
   const [giftVisible, setGiftVisible] = useState(true);
-
+  const [isSuccess, setIsSuccess] = useState<undefined | boolean>(undefined);
   const [playSound] = useSound("/assets/audio/sound.wav");
 
-  const onUserClickOnGift = (_event: any) => {
-    // Xử lý sự kiện khi chú chó được click
+  const onUserClickOnGift = async (_event: any) => {
+    console.log("Click");
     setExploding(true);
-    setGiftVisible(false);
     playSound();
-    onClick(true);
     if (ref.current) {
       setGiftPosition(ref.current.position);
     }
-    // Biến mất sau một khoảng thời gian (ví dụ: 1 giây)
+
+    try {
+      console.log("Calling API");
+      console.log(service);
+      const data = await service.userPickProduct(
+        product?.id ? Number(product.id) : undefined
+      );
+      console.log("Done Calling API");
+      console.log(data);
+
+      if (data) {
+        console.log("OKKK");
+        setIsSuccess(true);
+      } else {
+        console.log("Nooo");
+        setIsSuccess(false);
+      }
+    } catch (e) {
+      setIsSuccess(false);
+      console.log(e);
+    } finally {
+      setGiftVisible(false);
+      onClick(true);
+    }
+
     setTimeout(() => {
       setExploding(false);
     }, 1000);
   };
 
   useEffect(() => {
-    // Kiểm tra xem actions.animation có tồn tại không
     if (actions.animation) {
-      // Chạy animation khi mô hình được tạo
       actions.animation.play();
     }
   }, [actions.animation]);
 
   useFrame(() => {
     if (ref.current) {
-      // const x = ref.current.position.x;
-      // const y = ref.current.position.y;
-
-      // const { clientWidth, clientHeight } = document.documentElement;
-
-      // const worldPosition = new Vector3();
-
-      // ref.current.getWorldPosition(worldPosition);
-
-      // const isOutOfScreen =
-      //   worldPosition.x < 0 ||
-      //   worldPosition.x > clientWidth ||
-      //   worldPosition.y < 0 ||
-      //   worldPosition.y > clientHeight;
       const distance = ref.current.position.distanceTo(camera.position);
       const newSize = 1 + 75 / distance;
 
@@ -86,5 +93,6 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
     setGiftVisible,
     onUserClickOnGift,
     giftPosition,
+    isSuccess,
   };
 }

@@ -97,39 +97,6 @@ const FallingManager = ({
       clearTimeout(x);
     };
   }, [fallingComponents.length]);
-  // React.useEffect(() => {
-  //   let timeoutId: NodeJS.Timeout | undefined = undefined;
-  //   if (isUserClicked) {
-  //     count.current--;
-  //   }
-
-  //   const spawnFallingComponent = () => {
-  //     for (let i = 0; i < numberOfGifts; i++) {
-  //       const fallingDog = randomGiftComponent();
-
-  //       setFallingComponents((prevDogs) => [...prevDogs, fallingDog]);
-
-  //       timeoutId = setTimeout(() => {
-  //         setFallingComponents((prevDogs) =>
-  //           prevDogs.filter((dog) => dog !== fallingDog)
-  //         );
-  //       }, 5000);
-  //     }
-  //   };
-
-  //   let spawnInterval: NodeJS.Timeout | undefined = undefined;
-  //   if (!isUserClicked) {
-  //     spawnInterval = setInterval(spawnFallingComponent, 10000);
-  //   }
-  //   return () => {
-  //     if (spawnInterval) {
-  //       clearInterval(spawnInterval);
-  //     }
-  //     if (timeoutId) {
-  //       clearTimeout(timeoutId);
-  //     }
-  //   };
-  // }, [isUserClicked]);
 
   return count.current > 0 ? (
     <>

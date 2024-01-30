@@ -15,6 +15,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import ExplosionEffect from "../effect/ExplosionEffect";
 import { IProps } from "../../types/gift.props";
 import { calculateFallSpeed, useGift } from "./common";
+import PopUp from "../popup/popup";
 const modelGiftThree = import.meta.env.BASE_URL + "assets/model/gift-three.glb";
 
 export function GiftThree({ position, product, onClick }: IProps) {
@@ -26,10 +27,13 @@ export function GiftThree({ position, product, onClick }: IProps) {
     materials,
     exploding,
     giftPosition,
+    isSuccess,
   } = useGift({ position, product, onClick }, modelGiftThree);
 
   return (
     <>
+      {isSuccess && <PopUp setIsUserClicked={onClick} product={product} />}
+
       <group
         ref={ref}
         position={position}

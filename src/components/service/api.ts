@@ -15,7 +15,7 @@ export abstract class ApiGiftService {
    * @param args
    */
   public abstract userPickProduct(
-    productId: number,
+    productId: number | undefined,
     user?: User,
     ...args: any
   ): Promise<Product | boolean | any>;
