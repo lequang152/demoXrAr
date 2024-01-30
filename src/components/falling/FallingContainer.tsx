@@ -68,6 +68,7 @@ const FallingContainer = () => {
   const [product, setProduct] = useState({});
   // const [isLoading, setIsLoading] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  const [quantity, setQuantity] = useState(0);
 
   // useEffect(() => {
   //   const backgroundLoader = setTimeout(() => {
@@ -84,20 +85,44 @@ const FallingContainer = () => {
   return (
     <>
       <ProductProvider service={service}>
-        {!isReady && (
-          <div className={styles["button-start"]}>
-            <div className={styles["textButton"]}>Are you ready?</div>
-            <div className={styles["button"]}>
-              <Button
-                sx={{ backgroundColor: "#5798b7" }}
-                variant="contained"
-                onClick={handleStartClick}
-              >
-                Start
-              </Button>
+        {!isReady &&
+          (quantity > 0 ? (
+            <div className={styles["button-start"]}>
+              <div className={styles["textButton"]}>Are you ready?</div>
+              <div className={styles["button"]}>
+                <Button
+                  sx={{ backgroundColor: "#5798b7" }}
+                  variant="contained"
+                  onClick={handleStartClick}
+                >
+                  Start
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className={styles["notification"]}>
+              <div
+                style={{
+                  fontWeight: 600,
+                  fontSize: 20,
+                  textWrap: "wrap",
+                  textAlign: "center",
+                  marginBottom: 12,
+                }}
+              >
+                Số lượng quà đã hết, cảm ơn bạn đã tham gia!
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <Button
+                  sx={{ backgroundColor: "#5798b7" }}
+                  variant="contained"
+                  href="/"
+                >
+                  Trang Chủ
+                </Button>
+              </div>
+            </div>
+          ))}
         {/* {isLoading && isReady && (
           <div className={styles.loading}>
             <span>
