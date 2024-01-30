@@ -11,6 +11,8 @@ video {
   padding: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
+  background-color: black;
+  object-fit: cover;
 }
 
 #root {

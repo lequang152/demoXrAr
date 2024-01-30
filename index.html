@@ -15,31 +15,31 @@
     a-scene img {
       display: inline;
     }
-
   </style>
   <body>
   
     <div id="root">
-          <a-scene
-      class="a-scene"
-      vr-mode-ui="enabled: false;"
-      renderer="logarithmicDepthBuffer: true;"
-      embedded
-      arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
-  >    
-  <a-nft
-      type="nft"
-      class="a-nft"
-      smooth="true"
-      smoothCount="10"
-      smoothTolerance=".01"
-      smoothThreshold="5"
-  >
-  </a-nft>
+      <a-scene
+        class="a-scene"
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
+      >    
+      <a-nft
+          type="nft"
+          class="a-nft"
+          smooth="true"
+          smoothCount="10"
+          smoothTolerance=".01"
+          smoothThreshold="5"
+      >
+      </a-nft>
     </div>
     
-      <a-entity camera></a-entity>
     </a-scene>
+    <a-entity camera position="0 1.6 0" look-controls></a-entity> <!-- Set a position for the camera and enable look-controls -->
+
 
     <script type="module" src="/src/main.tsx"></script>
  
