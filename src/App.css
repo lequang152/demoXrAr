@@ -15,6 +15,7 @@ video {
   object-fit: cover;
 }
 
+
 #root {
   min-width: 100vw;
   min-height: 100vh !important;
