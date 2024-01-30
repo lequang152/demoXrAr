@@ -123,7 +123,11 @@ const FallingContainer = () => {
             <Canvas
               camera={{ position: [-60, 10, 10], rotation: [200, 200, 200] }}
             >
-              <OrbitControls position={new Vector3(0, 0, 0)} />
+              <OrbitControls
+                position={new Vector3(0, 0, 0)}
+                enableRotate={false}
+                enableZoom={false}
+              />
               <Environment preset="city" />
               <XR>
                 <FallingManager
