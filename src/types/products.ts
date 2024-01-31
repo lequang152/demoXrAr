@@ -96,7 +96,7 @@ const noi: Product = {
   description: `Bộ nồi nấu cao cấp`,
   number: 15,
 };
-let MOCK_PRODUCTS: Product[] = [];
+let MOCK_PRODUCTS: Product[] = [ruaChen, giatXa, noi];
 
 export const MOCK_PRODUCT = {
   products: MOCK_PRODUCTS,

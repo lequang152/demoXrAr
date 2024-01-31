@@ -18,31 +18,6 @@ import { rejects } from "assert";
 const backgroundImage =
   import.meta.env.BASE_URL + "assets/background/view3.hdr";
 
-// class ApiThienSuGiftService extends ApiGiftService {
-//   public getPromoteProducts(...args: any): Promise<Product[]> {
-//     return new Promise((resolve, reject) => {
-//       resolve(MOCK_PRODUCTS);
-//     });
-//   }
-//   public userPickProduct(
-//     productId: number,
-//     user?: User | undefined,
-//     ...args: any
-//   ): Promise<any> {
-//     return new Promise((resolve, reject) => {
-//       setTimeout(() => {
-//         resolve(true);
-//       }, 1000);
-//     });
-//   }
-//   public authenticate(
-//     credential?: UserLogin | undefined,
-//     ...args: any
-//   ): Promise<boolean | User> {
-//     throw new Error("Method not implemented.");
-//   }
-// }
-
 class ApiThienSuGiftService extends ApiGiftService {
   public getPromoteProducts(...args: any): Promise<Product[]> {
     return new Promise((resolve) => {
@@ -54,31 +29,35 @@ class ApiThienSuGiftService extends ApiGiftService {
     productId: number | undefined,
     user?: User,
     ...args: any
-  ): Promise<any> {
+  ): Promise<Product | undefined> {
     return new Promise((resolve, reject) => {
       // kiểm tra xem id có tồn tại trong danh sách hay không, thực ra chỗ này chỉ
       // mô tả cách hoạt động của backend.
       try {
         if (productId) {
+          console.log(productId);
           const found = MOCK_PRODUCT.products.find(
             (pro) => pro.id == productId && pro.number && pro.number > 0
           );
           if (found) {
             // xóa sản phẩm đó đi.
             let ps = MOCK_PRODUCT.products;
-            console.log("Before");
-            console.log(found);
-            if (found && found?.number) {
+
+            if (found && found.number && found.number > 0) {
               found.number -= 1;
+              resolve(found);
+            } else {
+              resolve(undefined);
             }
-            console.log("After");
-            console.log(found);
-            resolve(true);
           } else {
-            resolve(false);
+            resolve(undefined);
           }
+        } else {
+          resolve(undefined);
         }
       } catch (err) {
+        console.log("ERRRR");
+        console.log(err);
         reject(false);
       }
     });
@@ -90,11 +69,12 @@ class ApiThienSuGiftService extends ApiGiftService {
 }
 
 const FallingContainer = () => {
-  const service: ApiGiftService = new ApiThienSuGiftService();
+  const [service, setService] = useState(new ApiThienSuGiftService());
   const [isUserClicked, setIsUserClicked] = useState(false);
   const [product, setProduct] = useState({});
   // const [isLoading, setIsLoading] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<undefined | boolean>(undefined);
 
   const handleStartClick = () => {
     setIsReady(true);
@@ -142,6 +122,16 @@ const FallingContainer = () => {
           //   </div>
           // </div>
         }
+        {isSuccess != undefined && (
+          <PopUp
+            setIsUserClicked={(value: any) => {
+              setIsUserClicked(value);
+              setIsSuccess(undefined);
+            }}
+            product={product}
+          />
+        )}
+
         {/* {isLoading && isReady && (
           <div className={styles.loading}>
             <span>
@@ -171,6 +161,7 @@ const FallingContainer = () => {
                   isUserClicked={isUserClicked}
                   setIsUserClicked={setIsUserClicked}
                   setProduct={setProduct}
+                  setSuccess={setIsSuccess}
                 />
               </XR>
             </Canvas>

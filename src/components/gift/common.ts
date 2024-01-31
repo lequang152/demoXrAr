@@ -5,6 +5,7 @@ import { Group, Vector3 } from "three";
 import useSound from "use-sound";
 import { IProps } from "../../types/gift.props";
 import { useProducts } from "../context/product.context";
+import { GProps } from "./gift.factory";
 
 export const calculateFallSpeed = (): number => {
   const speeds = [0.3, 0.4, 0.5, 0.8, 0.9, 1];
@@ -13,7 +14,10 @@ export const calculateFallSpeed = (): number => {
   return speeds[rSpeed];
 };
 
-export function useGift({ onClick, position, product }: IProps, model: string) {
+export function useGift(
+  { onClick, position, product, setIsSuccess, setProduct }: GProps,
+  model: string
+) {
   const ref = useRef<Group>(null) as RefObject<Group>;
   const camera = useThree().camera;
   const [, , service] = useProducts();
@@ -24,9 +28,8 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
   const [exploding, setExploding] = useState(false);
   const [giftPosition, setGiftPosition] = useState(position);
   const [giftVisible, setGiftVisible] = useState(true);
-  const [isSuccess, setIsSuccess] = useState<undefined | boolean>(undefined);
   const [playSound] = useSound("/assets/audio/sound.wav");
-
+  const [isLoading, setIsLoading] = useState(false);
   const onUserClickOnGift = async (_event: any) => {
     console.log("Click");
     setExploding(true);
@@ -36,24 +39,24 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
     }
 
     try {
-      console.log("Calling API");
-      console.log(service);
-      const data = await service.userPickProduct(
-        product?.id ? Number(product.id) : undefined
-      );
-      console.log("Done Calling API");
-      console.log(data);
+      if (!isLoading) {
+        console.log("RENDER");
 
-      if (data) {
-        console.log("OKKK");
-        setIsSuccess(true);
-      } else {
-        console.log("Nooo");
-        setIsSuccess(false);
+        setIsLoading(true);
+        const data = await service.userPickProduct(
+          product?.id ? Number(product.id) : undefined
+        );
+        if (data) {
+          setIsSuccess!(true);
+        } else {
+          setIsSuccess!(false);
+        }
+        setProduct(data);
+        setIsLoading(false);
       }
     } catch (e) {
-      setIsSuccess(false);
       console.log(e);
+      setIsSuccess!(false);
     } finally {
       setGiftVisible(false);
       onClick(true);
@@ -93,6 +96,5 @@ export function useGift({ onClick, position, product }: IProps, model: string) {
     setGiftVisible,
     onUserClickOnGift,
     giftPosition,
-    isSuccess,
   };
 }

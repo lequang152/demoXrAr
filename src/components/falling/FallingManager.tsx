@@ -10,6 +10,7 @@ interface IProps {
   isUserClicked: boolean;
   setIsUserClicked: (value: any) => void;
   setProduct: (value: any) => void;
+  setSuccess: (value: boolean) => void;
 }
 
 function randomProducts(products: Product[]) {
@@ -52,6 +53,7 @@ const FallingManager = ({
   isUserClicked,
   setIsUserClicked,
   setProduct,
+  setSuccess,
 }: IProps) => {
   const [fallingComponents, setFallingComponents] = useState<JSX.Element[]>([]);
   const numberOfGifts = Number(process.env.REACT_APP_MAX_GIFT) || 30;
@@ -66,14 +68,14 @@ const FallingManager = ({
     const randomZ = Math.random() * 120 - 60;
     const randomY = Math.random() * 100;
     const randomProduct = randomProducts(products);
-    if (!isUserClicked) {
-      setProduct(randomProduct);
-    }
+
     const position = new Vector3(randomX, randomY, randomZ);
     let fallingDog = giftFactory({
       product: randomProduct,
       onClick: setIsUserClicked,
+      setIsSuccess: setSuccess,
       position: position,
+      setProduct,
     });
     return fallingDog;
   };

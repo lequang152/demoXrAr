@@ -4,4 +4,5 @@ export interface IProps {
   position: ThreeVector3;
   product?: Product;
   onClick: (bool: boolean) => void;
+  setIsSuccess?: (bool: boolean) => void;
 }

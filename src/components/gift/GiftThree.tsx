@@ -16,9 +16,16 @@ import ExplosionEffect from "../effect/ExplosionEffect";
 import { IProps } from "../../types/gift.props";
 import { calculateFallSpeed, useGift } from "./common";
 import PopUp from "../popup/popup";
+import { GProps } from "./gift.factory";
 const modelGiftThree = import.meta.env.BASE_URL + "assets/model/gift-three.glb";
 
-export function GiftThree({ position, product, onClick }: IProps) {
+export function GiftThree({
+  position,
+  product,
+  onClick,
+  setIsSuccess,
+  setProduct,
+}: GProps) {
   const {
     ref,
     onUserClickOnGift,
@@ -27,13 +34,13 @@ export function GiftThree({ position, product, onClick }: IProps) {
     materials,
     exploding,
     giftPosition,
-    isSuccess,
-  } = useGift({ position, product, onClick }, modelGiftThree);
+  } = useGift(
+    { position, product, onClick, setIsSuccess, setProduct },
+    modelGiftThree
+  );
 
   return (
     <>
-      {isSuccess && <PopUp setIsUserClicked={onClick} product={product} />}
-
       <group
         ref={ref}
         position={position}
